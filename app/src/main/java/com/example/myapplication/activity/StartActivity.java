@@ -1,4 +1,53 @@
 package com.example.myapplication.activity;
 
-public class StartActivity {
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.util.AttributeSet;
+import android.view.View;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+
+import com.example.myapplication.R;
+import com.example.myapplication.db.Users;
+import com.example.myapplication.fragment.MapsFragment;
+
+import java.util.List;
+
+public class StartActivity extends AppCompatActivity {
+    String login;
+    List<Users> data;
+    @Nullable
+    @Override
+    public View onCreateView(@Nullable View parent, @NonNull String name, @NonNull Context context, @NonNull AttributeSet attrs) {
+        setContentView(R.layout.start_layout);
+        login = getIntent().getStringExtra("login");
+        searchUsers(login);
+        //todo perehod na fragment posle auth
+        replaceFragment(MapsFragment.newInstance(), true);
+        return super.onCreateView(parent, name, context, attrs);
+    }
+
+    //todo sdelat polycheniy dannh polzovatelya po loginu b zpisat s SharedPrefernces(nazvanie lezhat v Personal fragment)
+    private void searchUsers(String login ) {
+
+        for(int i = 0; i < data.size(); i++){
+            if(data.get(i).getPhone().equals(login)){
+               // SharedPreferences sp =;
+            }
+        }
+
+    }
+
+    public void replaceFragment(Fragment fragment, boolean addToBackStack) {
+        FragmentTransaction fragmentTransaction =
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.container, fragment, fragment.getClass().getSimpleName());
+        if (addToBackStack) fragmentTransaction.addToBackStack(fragment.getClass().getName());
+        fragmentTransaction.commit();
+    }
 }

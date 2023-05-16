@@ -18,6 +18,8 @@ public class RegistrationFragment extends Fragment {
 
     public static RegistrationFragment newInstance(int type) {
 
+        //todo registraciya po telefonu
+
         Bundle args = new Bundle();
         args.putInt(TYPE_INFO, type);
 

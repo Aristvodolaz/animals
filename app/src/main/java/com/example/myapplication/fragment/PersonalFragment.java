@@ -27,8 +27,6 @@ public class PersonalFragment extends Fragment {
 
     private void initViews() {
         getInfoForPerson();
-
-
     }
 
     private void getInfoForPerson(){

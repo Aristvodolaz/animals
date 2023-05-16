@@ -35,7 +35,7 @@ public class AuthFragment extends Fragment {
         initViews();
         return  v;
     }
-
+//todo dorabotat auth
 
     //todo аунтефикация в приложении и переход во внутрь
     private void initViews() {
