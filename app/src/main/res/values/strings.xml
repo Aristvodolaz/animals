@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">My Application</string>
+    <string name="login">Логин</string>
+    <string name="password">Пароль</string>
+    <string name="vhod">Вход</string>
+    <string name="registr">Регистрация</string>
+    <string name="user">Пользователь</string>
+    <string name="working">Уход/Работа</string>
+    <string name="prederzhka">Передержка</string>
+    <string name="vetklinnika">Ветклинника</string>
+    <string name="priut">Приют</string>
+</resources>
