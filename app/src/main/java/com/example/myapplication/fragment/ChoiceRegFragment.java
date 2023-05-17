@@ -21,6 +21,7 @@ public class ChoiceRegFragment extends Fragment {
         return new ChoiceRegFragment();
     }
 
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -32,13 +33,13 @@ public class ChoiceRegFragment extends Fragment {
         klinnikaBtn = v.findViewById(R.id.klinnika_btn);
 
         userBtn.setOnClickListener(view -> {
-            ((MainActivity) getActivity()).replaceFragment(RegistrationFragment.newInstance(1), false);
+            ((MainActivity) getActivity()).replaceFragment(RegistrationFragmentKt.Companion.newInstance(0), false);
         });
         workBtn.setOnClickListener(view -> {
-            ((MainActivity) getActivity()).replaceFragment(RegistrationFragment.newInstance(1), false);
+            ((MainActivity) getActivity()).replaceFragment(RegistrationFragmentKt.Companion.newInstance(1), false);
         });
         peredBtn.setOnClickListener(view -> {
-            ((MainActivity) getActivity()).replaceFragment(RegistrationFragment.newInstance(2), false);
+            ((MainActivity) getActivity()).replaceFragment(RegistrationFragmentKt.Companion.newInstance(2), false);
         });
 
 //        todo in development

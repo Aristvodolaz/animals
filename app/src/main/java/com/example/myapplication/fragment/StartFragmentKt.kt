@@ -27,7 +27,7 @@ class StartFragmentKt : Fragment() {
 
         val regBtn: Button = view.findViewById(R.id.reg_btn)
         regBtn.setOnClickListener {
-            (activity as MainActivity?)!!.replaceFragment(RegistrationFragmentKt.newInstance(), true)
+            (activity as MainActivity?)!!.replaceFragment(ChoiceRegFragment.newInstance(), true)
         }
 
         val logBtn: Button = view.findViewById(R.id.init_btn)

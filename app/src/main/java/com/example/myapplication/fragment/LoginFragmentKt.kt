@@ -57,7 +57,7 @@ class LoginFragmentKt : Fragment() {
         }
         val regNowBtn: TextView = view.findViewById(R.id.regNowBtn)
         regNowBtn.setOnClickListener{
-            (activity as MainActivity?)!!.replaceFragment(RegistrationFragmentKt.newInstance(), true)
+            (activity as MainActivity?)!!.replaceFragment(ChoiceRegFragment.newInstance(), true)
         }
         val forgotPass: TextView = view.findViewById(R.id.forgPass)
         forgotPass.setOnClickListener{
@@ -77,7 +77,7 @@ class LoginFragmentKt : Fragment() {
         mAuth = FirebaseAuth.getInstance()
 
         btnSignIn!!.setOnClickListener{
-            (activity as MainActivity?)!!.replaceFragment(RegistrationFragmentKt.newInstance(), true)
+            (activity as MainActivity?)!!.replaceFragment(ChoiceRegFragment.newInstance(), true)
         }
 
         loginUser()
