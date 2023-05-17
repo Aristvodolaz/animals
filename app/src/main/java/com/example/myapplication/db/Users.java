@@ -1,22 +1,21 @@
 package com.example.myapplication.db;
 
 public class Users {
-    Long type;
+    int type;
     String name;
     String Surname;
     String phone;
     String age;
-    String pol;
+
     String city;
     String imgURL;
 
-    public Users(Long type, String name, String surname, String phone, String age, String pol, String city, String imgURL) {
+    public Users(int type, String name, String surname, String phone, String age, String city, String imgURL) {
         this.type = type;
         this.name = name;
         this.Surname = surname;
         this.phone = phone;
         this.age = age;
-        this.pol = pol;
         this.city = city;
         this.imgURL = imgURL;
     }
@@ -29,11 +28,11 @@ public class Users {
         this.imgURL = imgURL;
     }
 
-    public Long getType() {
+    public int getType() {
         return type;
     }
 
-    public void setType(Long type) {
+    public void setType(int type) {
         this.type = type;
     }
 
@@ -69,13 +68,6 @@ public class Users {
         this.age = age;
     }
 
-    public String getPol() {
-        return pol;
-    }
-
-    public void setPol(String pol) {
-        this.pol = pol;
-    }
 
     public String getCity() {
         return city;

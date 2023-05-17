@@ -88,7 +88,7 @@ class LoginFragmentKt : Fragment() {
         password = nPassword?.text.toString()
 //
         if(!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)){
-            mProgressBar!!.setMessage("Please wait!")
+            mProgressBar!!.setMessage("Пожалуйста подождите")
             mProgressBar!!.show()
 
             Log.d(TAG, "Logging in user")

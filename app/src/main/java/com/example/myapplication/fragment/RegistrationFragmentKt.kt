@@ -10,14 +10,25 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.Button
+import android.widget.EditText
+import android.widget.ImageView
+import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.myapplication.R
 import com.example.myapplication.activity.MainActivity
 import com.example.myapplication.activity.StartActivity
+import com.example.myapplication.db.Users
+import com.google.android.gms.tasks.OnFailureListener
+import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.firestore.CollectionReference
+import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.FirebaseFirestore
+
 
 class RegistrationFragmentKt : Fragment() {
     private var userName: EditText? = null
@@ -29,14 +40,17 @@ class RegistrationFragmentKt : Fragment() {
     private var regButton: Button? = null
     private var progressBar: ProgressDialog? = null
     private var userDoublePass: EditText? = null
+    private var userCity: EditText? = null
 
-
+    private var dbUsers: CollectionReference? = null
+    private var db: FirebaseFirestore? = null
     private var databaseReference: DatabaseReference? = null
     private var mDatabase: FirebaseDatabase? = null
     private var mAuth: FirebaseAuth? = null
 
     private val TAG = "CreateAccountActivity"
 
+    private var city: String? = null
     private var name: String? = null
     private var surname: String? = null
     private var age: String? = null
@@ -44,6 +58,8 @@ class RegistrationFragmentKt : Fragment() {
     private var email: String? = null
     private var password: String? = null
     private var double_password: String? = null
+    private var type: Int = 0
+
     companion object {
         val TYPE_INFO = "type_info"
         fun newInstance(type: Int): RegistrationFragmentKt? {
@@ -76,6 +92,7 @@ class RegistrationFragmentKt : Fragment() {
             initialise()
         }
 
+
         return view
     }
 
@@ -86,12 +103,14 @@ class RegistrationFragmentKt : Fragment() {
         userPhone = view?.findViewById(R.id.user_phone) as EditText
         userEmail = view?.findViewById(R.id.user_email) as EditText
         userPassword = view?.findViewById(R.id.user_password) as EditText
+        userDoublePass = view?.findViewById(R.id.double_user_password) as EditText
+        userCity = view?.findViewById(R.id.user_city) as EditText
         progressBar = ProgressDialog(getContext())
 
         mDatabase = FirebaseDatabase.getInstance()
         databaseReference = mDatabase!!.reference!!.child("Users")
         mAuth = FirebaseAuth.getInstance()
-
+        db = FirebaseFirestore.getInstance();
         createNewAccount()
     }
 
@@ -123,16 +142,19 @@ class RegistrationFragmentKt : Fragment() {
                             val userId = mAuth!!.currentUser!!.uid
 
                             verifyEmail()
-
+                            dbUsers = db?.collection("Users")
                             val currentUserIdBb = databaseReference!!.child(userId)
                             if(requireArguments().getInt(TYPE_INFO)==0){
                                 currentUserIdBb.child("type").setValue(0)
+                                type = 0
                             } else if (requireArguments().getInt(TYPE_INFO)==1){
                                 //todo for doggiesitter
                                 currentUserIdBb.child("type").setValue(1)
+                                type = 1
                             } else if(requireArguments().getInt(TYPE_INFO)==2){
                                 //todo for perederzhka
                                 currentUserIdBb.child("type").setValue(2)
+                                type = 2
                             }
                             currentUserIdBb.child("name").setValue(name)
                             currentUserIdBb.child("surname").setValue(surname)
@@ -141,6 +163,23 @@ class RegistrationFragmentKt : Fragment() {
                             currentUserIdBb.child("email").setValue(email)
                             currentUserIdBb.child("password").setValue(password)
 
+                            val data = Users(type, name, surname, phone,
+                                age,city,"https://cdn-icons-png.flaticon.com/512/1025/1025373.png")
+
+                            dbUsers?.add(data)
+                                ?.addOnSuccessListener(OnSuccessListener<DocumentReference?> {
+                                    Toast.makeText(
+                                        context,
+                                        "Аккаунт успешно создан!",
+                                        Toast.LENGTH_LONG
+                                    ).show()
+                                })?.addOnFailureListener(OnFailureListener {
+                                    Toast.makeText(
+                                        context,
+                                        "Произошла ошибка, попробуйте позднее!",
+                                        Toast.LENGTH_LONG
+                                    ).show()
+                                })
                             updateUserInfoAndUi()
                         } else {
                             Log.w(TAG, "createUserWithEmail:failure", task.exception)
