@@ -9,4 +9,18 @@
     <string name="prederzhka">Передержка</string>
     <string name="vetklinnika">Ветклинника</string>
     <string name="priut">Приют</string>
+
+    <string name="slogan">Travel together!</string>
+
+    <string name="signup">SignUp</string>
+    <string name="logo">Search&amp;Travel</string>
+    <string name="name">Никнейм</string>
+    <string name="phone">Телефон</string>
+    <string name="email">Email</string>
+
+    <string name="confPassword">Подтвердите пароль</string>
+    <string name="age">Возраст</string>
+    <string name="logTxt">Ваш логин</string>
+    <string name="forgotPass">Reset email</string>
+
 </resources>

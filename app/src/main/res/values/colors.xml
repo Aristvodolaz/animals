@@ -7,4 +7,12 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="color_for_reg">#fbc314</color>
+    <color name="color_for_log">#e69105</color>
+    <color name="fon">#dcb444</color>
+    <color name="logo_txt">#87fcc1</color>
+    <color name="slogan_txt">#0299de</color>
+    <color name="color_for_log_backgr">#c7923a</color>
+    <color name="txt_reg">#4D4F50</color>
 </resources>

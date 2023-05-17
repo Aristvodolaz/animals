@@ -45,5 +45,6 @@ public class RegistrationFragment extends Fragment {
             //todo for perederzhka
         }
     }
+
 }
 
