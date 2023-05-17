@@ -5,11 +5,15 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.Button
+import android.widget.EditText
+import android.widget.ImageView
+import android.widget.TextView
+import android.widget.Toast
+import androidx.fragment.app.Fragment
 import com.example.myapplication.R
 import com.example.myapplication.activity.MainActivity
 import com.example.myapplication.activity.StartActivity
@@ -80,11 +84,11 @@ class LoginFragmentKt : Fragment() {
     }
 
     private fun loginUser(){
-        email = login?.text.toString()
+        email = login?.text.toString().trim()
         password = nPassword?.text.toString()
-
+//
         if(!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)){
-            mProgressBar!!.setMessage("register user...")
+            mProgressBar!!.setMessage("Please wait!")
             mProgressBar!!.show()
 
             Log.d(TAG, "Logging in user")
@@ -111,6 +115,7 @@ class LoginFragmentKt : Fragment() {
     private fun updateUI(){
         val intent = Intent(getContext(), StartActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        intent.putExtra("login", email)
         startActivity(intent)
     }
 }
