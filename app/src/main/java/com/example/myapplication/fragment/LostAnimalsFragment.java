@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.R;
+import com.example.myapplication.adapter.KindHandsAdapter;
 import com.example.myapplication.adapter.LostAnimals;
 import com.example.myapplication.adapter.PoteryashkiAnimalsAdapter;
 import com.example.myapplication.db.Animals;
@@ -27,10 +28,17 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import org.checkerframework.checker.units.qual.C;
+
 import java.util.List;
 
 public class LostAnimalsFragment extends Fragment {
 
+
+    public static LostAnimalsFragment newInstance() {
+
+        return new LostAnimalsFragment();
+    }
     RecyclerView rv;
     TabLayout tl;
     FirebaseDatabase firebaseDatabase;
@@ -38,7 +46,7 @@ public class LostAnimalsFragment extends Fragment {
     List<AnimalsLost> data;
     List<Animals> data_without_home;
 
-    String[] labels = {"ИЩЕМ ДОМ", "ПОТЕРЯШКИ"};
+    String[] labels = {"ИЩЕМ ДОМ", "ПОТЕРЯШКИ", "ДОБРЫЕ РУКИ"};
 
     @SuppressLint("MissingInflatedId")
     @Nullable
@@ -53,10 +61,13 @@ public class LostAnimalsFragment extends Fragment {
             public void onTabSelected(TabLayout.Tab tab) {
                 switch (tab.getPosition()){
                     case 0:
-                        getPoteryazhki();
+                        getInfoLostAnimals();
                         break;
                     case 1:
-                        getInfoLostAnimals();
+                        getPoteryazhki();
+                        break;
+                    case 2:
+                        getKingHands();
                         break;
                 }
             }
@@ -73,6 +84,43 @@ public class LostAnimalsFragment extends Fragment {
         });
         getInfoLostAnimals();
         return v;
+    }
+    //todo dobtye ruki
+    public void getKingHands(){
+        for (int i = 0 ; i < labels.length ; i++){
+            tl.addTab(tl.newTab().setText(labels[i]));
+        }
+        databaseReference = firebaseDatabase.getReference("KindAnimalsData");
+        databaseReference.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                AnimalsLost animalsLost = snapshot.getValue(AnimalsLost.class);
+                data.add(animalsLost);
+                if(data.isEmpty() || data == null){
+                    Toast.makeText(getContext(), "Список животных пуст!", Toast.LENGTH_LONG).show();
+                } else  {
+                    KindHandsAdapter adapter = new KindHandsAdapter(getContext(), data);
+                    rv.setLayoutManager(new LinearLayoutManager(getActivity()));
+                    rv.setAdapter(adapter);
+                }
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
     }
 
     //todo bezdomnye animals
@@ -119,7 +167,7 @@ public class LostAnimalsFragment extends Fragment {
 
     //todo poteryvshiesya domashnie animals
     private void getInfoLostAnimals() {
-        databaseReference = firebaseDatabase.getReference("LostAnimalsData");
+        databaseReference = firebaseDatabase.getReference("addAnimalsData");
         databaseReference.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {

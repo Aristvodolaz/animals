@@ -6,6 +6,10 @@
     android:layout_marginTop="4dp"
     android:layout_height="wrap_content">
     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+    <LinearLayout
         android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
@@ -55,5 +59,33 @@
                 android:text="Адрес пропажи: ул. Костычева д.23"/>
         </LinearLayout>
     </LinearLayout>
-
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/color_for_log_backgr"/>
+    <LinearLayout
+        android:layout_marginTop="4dp"
+        android:gravity="end"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_marginRight="8dp"
+            android:textSize="14dp"
+            android:id="@+id/name_user"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Наталья П."/>
+        <TextView
+            android:layout_marginRight="10dp"
+            android:textSize="14dp"
+            android:id="@+id/num_user"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" +7962056874"/>
+    </LinearLayout>
+</LinearLayout>
 </androidx.cardview.widget.CardView>

@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.example.myapplication.R;
+import com.example.myapplication.db.NeedPerderzhka;
 import com.example.myapplication.db.Perederzhka;
 
 import java.util.List;
@@ -18,7 +19,12 @@ import java.util.List;
 public class NeedPerederzhkaAdapter extends RecyclerView.Adapter<NeedPerederzhkaAdapter.LabelHolder> {
 
     private Context context;
-    private List<Perederzhka> data;
+    private List<NeedPerderzhka> data;
+
+    public NeedPerederzhkaAdapter(Context context, List<NeedPerderzhka> data) {
+        this.context = context;
+        this.data = data;
+    }
 
     @NonNull
     @Override

@@ -63,17 +63,17 @@ class ForgotPasswordFragmentKt : Fragment() {
             addOnCompleteListener {
                     task ->
                 if(task.isSuccessful){
-                    val message = "Email sent."
+                    val message = "КОд отправлен на почту."
                     Log.d(TAG, message)
                     Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show()
                     updateUI()
                 } else{
                     Log.w(TAG, "message", task.exception)
-                    Toast.makeText(getContext(), "No user found with this email", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(getContext(), "Пользователь с данной почтой не найден", Toast.LENGTH_SHORT).show()
                 }
             }
         } else{
-            Toast.makeText(getContext(), "Enter email", Toast.LENGTH_SHORT).show()
+            Toast.makeText(getContext(), "Введите почту", Toast.LENGTH_SHORT).show()
         }
     }
 

@@ -16,6 +16,10 @@ import com.example.myapplication.R;
 
 
 public class PersonalFragment extends Fragment {
+
+    public static PersonalFragment newInstance() {
+        return new PersonalFragment();
+    }
     String name, surname, age, city, pol, phone, img;
     @Nullable
     @Override
@@ -36,7 +40,6 @@ public class PersonalFragment extends Fragment {
         phone = sp.getString("phone", "");
         age = sp.getString("age", "");
         city = sp.getString("city", "");
-        pol = sp.getString("pol", "");
         img =sp.getString("img", "");
     }
 }

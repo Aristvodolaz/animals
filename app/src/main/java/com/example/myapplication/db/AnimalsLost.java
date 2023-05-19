@@ -3,7 +3,6 @@ package com.example.myapplication.db;
 
 public class AnimalsLost {
     String adress;
-    String street;
     String poroda;
 
     String date_prodazhi;
@@ -12,6 +11,9 @@ public class AnimalsLost {
     String description;
     String name;
 
+    String nameUser;
+    String phoneUser;
+
 
     public String getPoroda() {
         return poroda;
@@ -19,14 +21,6 @@ public class AnimalsLost {
 
     public void setPoroda(String poroda) {
         this.poroda = poroda;
-    }
-
-    public String getStreet() {
-        return street;
-    }
-
-    public void setStreet(String street) {
-        this.street = street;
     }
 
     public String getAdress() {
@@ -45,15 +39,32 @@ public class AnimalsLost {
         this.date_prodazhi = date_prodazhi;
     }
 
-    public AnimalsLost(String adress, String street, String poroda, String date_prodazhi, String imgURL, String pol, String description, String name) {
+    public AnimalsLost(String adress,  String poroda, String date_prodazhi, String imgURL, String pol, String description, String name, String nameUser, String phoneUser) {
         this.adress = adress;
-        this.street = street;
         this.poroda = poroda;
         this.date_prodazhi = date_prodazhi;
         this.imgURL = imgURL;
         this.pol = pol;
         this.description = description;
         this.name = name;
+        this.nameUser = nameUser;
+        this.phoneUser = phoneUser;
+    }
+
+    public String getNameUser() {
+        return nameUser;
+    }
+
+    public void setNameUser(String nameUser) {
+        this.nameUser = nameUser;
+    }
+
+    public String getPhoneUser() {
+        return phoneUser;
+    }
+
+    public void setPhoneUser(String phoneUser) {
+        this.phoneUser = phoneUser;
     }
 
     public String getImgURL() {

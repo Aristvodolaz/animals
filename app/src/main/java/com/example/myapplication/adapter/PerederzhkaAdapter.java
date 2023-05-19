@@ -17,6 +17,12 @@ import java.util.List;
 public class PerederzhkaAdapter extends RecyclerView.Adapter<PerederzhkaAdapter.LabelHolder> {
     private Context context;
     private List<Perederzhka> data;
+
+    public PerederzhkaAdapter(Context context, List<Perederzhka> data) {
+        this.context = context;
+        this.data = data;
+    }
+
     @NonNull
     @Override
     public PerederzhkaAdapter.LabelHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

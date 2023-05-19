@@ -39,6 +39,8 @@ public class LostAnimals extends RecyclerView.Adapter<LostAnimals.LabelHolder> {
         holder.descriprion.setText("Описание: "+data.get(position).getDescription());
         holder.address.setText("Адрес пропажи: "+data.get(position).getAdress());
         holder.datePropazhi.setText("Дата пропажи: "+data.get(position).getDate_prodazhi());
+        holder.userName.setText(data.get(position).getNameUser());
+        holder.userPhone.setText(data.get(position).getPhoneUser());
         Picasso.get().load(data.get(position).getImgURL()).into(holder.img);
     }
 
@@ -49,7 +51,7 @@ public class LostAnimals extends RecyclerView.Adapter<LostAnimals.LabelHolder> {
 
     public class LabelHolder extends  RecyclerView.ViewHolder{
 
-        TextView address, name, datePropazhi, descriprion, poroda;
+        TextView address, name, datePropazhi, descriprion, poroda, userName, userPhone;
         ImageView img;
         public LabelHolder(@NonNull View itemView) {
             super(itemView);
@@ -59,6 +61,8 @@ public class LostAnimals extends RecyclerView.Adapter<LostAnimals.LabelHolder> {
             descriprion = itemView.findViewById(R.id.description);
             poroda = itemView.findViewById(R.id.poroda);
             img = itemView.findViewById(R.id.img);
+            userName = itemView.findViewById(R.id.name_user);
+            userPhone = itemView.findViewById(R.id.user_phone);
         }
     }
 }
