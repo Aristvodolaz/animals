@@ -47,7 +47,7 @@ public class StartActivity extends AppCompatActivity {
 
     private void initViews() {
         personBtn.setOnClickListener(v -> {
-            replaceFragment(LostAnimalsFragment.newInstance(), true);
+            replaceFragment(LostAnimalsFragment.newInstance(), false);
         });
         perederzhkaBtn.setOnClickListener(v -> {
             replaceFragment(PerederzhkaFragment.newInstance(), true);

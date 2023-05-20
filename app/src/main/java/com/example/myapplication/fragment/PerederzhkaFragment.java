@@ -135,9 +135,7 @@ public class PerederzhkaFragment extends Fragment {
 
     private void getNeedPerederzhka() {
         data_need = new ArrayList<>();
-        for (int i = 0; i < lable.length; i++) {
-            tl.addTab(tl.newTab().setText(lable[i]));
-        }
+
         databaseReference = firebaseDatabase.getReference("PerederzhkaAnimalsNeedData");
         databaseReference.addChildEventListener(new ChildEventListener() {
             @Override

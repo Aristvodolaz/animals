@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
 
     <FrameLayout
-        android:layout_alignParentBottom="true"
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:id="@+id/container"/>
 
     <LinearLayout
+        android:gravity="bottom"
         android:padding="8dp"
         android:background="#74443b"
         android:layout_alignParentBottom="true"
@@ -48,8 +49,8 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:src="@drawable/baseline_person_24"/>
-
     </LinearLayout>
+
 </RelativeLayout>
 
 
