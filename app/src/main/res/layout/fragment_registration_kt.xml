@@ -100,7 +100,7 @@
                 android:textColor="@color/txt_reg"
                 android:textSize="15dp" />
             <EditText
-                android:id="@+id/user_phone"
+                android:id="@+id/user_сity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="text"

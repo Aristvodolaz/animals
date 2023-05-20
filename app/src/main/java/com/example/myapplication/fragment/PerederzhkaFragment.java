@@ -11,18 +11,13 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 
 import com.example.myapplication.R;
 import com.example.myapplication.adapter.NeedPerederzhkaAdapter;
 import com.example.myapplication.adapter.PerederzhkaAdapter;
-import com.example.myapplication.adapter.PoteryashkiAnimalsAdapter;
-import com.example.myapplication.adapter.WorkAdapter;
-import com.example.myapplication.db.Animals;
-import com.example.myapplication.db.AnimalsLost;
 import com.example.myapplication.db.NeedPerderzhka;
-import com.example.myapplication.db.NeedWorking;
 import com.example.myapplication.db.Perederzhka;
-import com.example.myapplication.db.Working;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -30,8 +25,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
 import java.util.List;
-
 
 public class PerederzhkaFragment extends Fragment {
 
@@ -43,6 +38,7 @@ public class PerederzhkaFragment extends Fragment {
 
     RecyclerView rv;
     TabLayout tl;
+    ViewPager viewPager;
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
     List<Perederzhka> data;
@@ -51,14 +47,28 @@ public class PerederzhkaFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = LayoutInflater.from(getContext()).inflate(R.layout.perederzhka_layout, container, false);
+        View v = inflater.inflate(R.layout.perederzhka_layout, container, false);
         rv = v.findViewById(R.id.recycler_view);
+        tl = v.findViewById(R.id.tab_view);
+//        viewPager = v.findViewById(R.id.view_pager);
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference("Data");
+
+        initViewPager();
+        getPerederzhka();
+
+        return v;
+    }
+
+    private void initViewPager() {
+        for (int i = 0; i < lable.length; i++) {
+            tl.addTab(tl.newTab().setText(lable[i]));
+        }
+
         tl.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                switch (tab.getPosition()){
+                switch (tab.getPosition()) {
                     case 0:
                         getPerederzhka();
                         break;
@@ -78,65 +88,20 @@ public class PerederzhkaFragment extends Fragment {
 
             }
         });
-        getPerederzhka();
-        return v;
-
     }
 
-    private void getNeedPerederzhka() {
-        for (int i = 0 ; i < lable.length ; i++){
-            tl.addTab(tl.newTab().setText(lable[i]));
-        }
-        databaseReference = firebaseDatabase.getReference("PerederzhkaAnimalsNeedData");
-        databaseReference.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                NeedPerderzhka needPerderzhka = snapshot.getValue(NeedPerderzhka.class);
-                data_need.add(needPerderzhka);
-                if(data_need.isEmpty() || data_need == null){
-                    Toast.makeText(getContext(), "Список предложений пуст", Toast.LENGTH_LONG).show();
-                } else  {
-                    NeedPerederzhkaAdapter adapter = new NeedPerederzhkaAdapter(getContext(), data_need);
-                    rv.setLayoutManager(new LinearLayoutManager(getActivity()));
-                    rv.setAdapter(adapter);
-                }
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }
 
     private void getPerederzhka() {
-        for (int i = 0 ; i < lable.length ; i++){
-            tl.addTab(tl.newTab().setText(lable[i]));
-        }
+        data = new ArrayList<>();
         databaseReference = firebaseDatabase.getReference("PerederzhkaAnimalsData");
         databaseReference.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 Perederzhka perederzhka = snapshot.getValue(Perederzhka.class);
                 data.add(perederzhka);
-                if(data.isEmpty() || data == null){
+                if (data.isEmpty() || data == null) {
                     Toast.makeText(getContext(), "Список предложений пуст", Toast.LENGTH_LONG).show();
-                } else  {
+                } else {
                     PerederzhkaAdapter adapter = new PerederzhkaAdapter(getContext(), data);
                     rv.setLayoutManager(new LinearLayoutManager(getActivity()));
                     rv.setAdapter(adapter);
@@ -162,10 +127,54 @@ public class PerederzhkaFragment extends Fragment {
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
-        });
 
+            // Остальные методы ChildEventListener...
+
+        });
     }
 
+    private void getNeedPerederzhka() {
+        data_need = new ArrayList<>();
+        for (int i = 0; i < lable.length; i++) {
+            tl.addTab(tl.newTab().setText(lable[i]));
+        }
+        databaseReference = firebaseDatabase.getReference("PerederzhkaAnimalsNeedData");
+        databaseReference.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                NeedPerderzhka needPerderzhka = snapshot.getValue(NeedPerderzhka.class);
+                data_need.add(needPerderzhka);
+                if (data_need.isEmpty() || data_need == null) {
+                    Toast.makeText(getContext(), "Список предложений пуст", Toast.LENGTH_LONG).show();
+                } else {
+                    NeedPerederzhkaAdapter adapter = new NeedPerederzhkaAdapter(getContext(), data_need);
+                    rv.setLayoutManager(new LinearLayoutManager(getActivity()));
+                    rv.setAdapter(adapter);
+                }
+            }
 
-    //todo sdelat po analogii s LostAnimalsFragment + dodelat po analogii adapter + sverstat .xml
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+
+            // Остальные методы ChildEventListener...
+
+        });
+    }
 }
