@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.myapplication.R;
@@ -66,6 +67,10 @@ public class CreateAnimalsFragment extends Fragment {
         // Initialize FirebaseFirestore
         db = FirebaseFirestore.getInstance();
         tl = v.findViewById(R.id.tab_view);
+        tl.setSelectedTabIndicatorColor(ContextCompat.getColor(getContext(), R.color.color_for_reg));
+
+// Делаем подчеркивание выбранного элемента полной ширины
+        tl.setTabIndicatorFullWidth(true);
         poroda = v.findViewById(R.id.poroda);
         klichka = v.findViewById(R.id.klichka_n);
         date = v.findViewById(R.id.date);
@@ -74,7 +79,7 @@ public class CreateAnimalsFragment extends Fragment {
 
         address = v.findViewById(R.id.adress_anim);
         porodaAnim = v.findViewById(R.id.poroda_anim);
-        datePropazhi = v.findViewById(R.id.date_propazhi);
+        datePropazhi = v.findViewById(R.id.date_anim);
         pol = v.findViewById(R.id.pol_anim);
         opisanie = v.findViewById(R.id.descript_anim);
         nameAnim = v.findViewById(R.id.name_anim);
@@ -130,9 +135,11 @@ public class CreateAnimalsFragment extends Fragment {
     private void addToKindHandsDataBase(String adress_potery, String poroda_anim, String date_prodazhi, String pol_anim, String imgUrl,
                                         String opisanie_anim, String name_anim, String name_user, String phone_user) {
 
+        db = FirebaseFirestore.getInstance(); // Раскомментируйте эту строку для инициализации объекта db
         CollectionReference dbDrivers = db.collection("KindAnimalsData");
-        AnimalsLost animalsLost = new AnimalsLost(adress_potery ,poroda_anim,date_prodazhi,imgUrl,pol_anim,opisanie_anim,name_anim,name_user,phone_user);
-        dbDrivers.add(animalsLost).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+        AnimalsLost animals = new AnimalsLost(adress_potery ,poroda_anim,date_prodazhi, imgUrl,
+                pol_anim,opisanie_anim,name_anim, name_user, phone_user);
+        dbDrivers.add(animals).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
             @Override
             public void onSuccess(DocumentReference documentReference) {
                 Toast.makeText(getContext(), "Ваше объявление успешно добавлено!", Toast.LENGTH_LONG).show();
@@ -143,16 +150,17 @@ public class CreateAnimalsFragment extends Fragment {
             public void onFailure(@NonNull Exception e) {
                 Toast.makeText(getContext(), "Произошла ошибка, попробуйте позднее!", Toast.LENGTH_LONG).show();
             }
-
         });
     }
 
     private void addToPoteryashkaDataBase(String adress_potery, String poroda_anim, String date_prodazhi, String pol_anim, String imgUrl,
                                         String opisanie_anim, String name_anim, String name_user, String phone_user) {
 
+        db = FirebaseFirestore.getInstance(); // Раскомментируйте эту строку для инициализации объекта db
         CollectionReference dbDrivers = db.collection("PoteryashkiAnimalsData");
-        AnimalsLost animalsLost = new AnimalsLost(adress_potery ,poroda_anim,date_prodazhi,imgUrl,pol_anim,opisanie_anim,name_anim,name_user,phone_user);
-        dbDrivers.add(animalsLost).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+        AnimalsLost animals = new AnimalsLost(adress_potery ,poroda_anim,date_prodazhi, imgUrl,
+                pol_anim,opisanie_anim,name_anim, name_user, phone_user);
+        dbDrivers.add(animals).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
             @Override
             public void onSuccess(DocumentReference documentReference) {
                 Toast.makeText(getContext(), "Ваше объявление успешно добавлено!", Toast.LENGTH_LONG).show();
@@ -163,7 +171,6 @@ public class CreateAnimalsFragment extends Fragment {
             public void onFailure(@NonNull Exception e) {
                 Toast.makeText(getContext(), "Произошла ошибка, попробуйте позднее!", Toast.LENGTH_LONG).show();
             }
-
         });
     }
 
@@ -235,7 +242,7 @@ public class CreateAnimalsFragment extends Fragment {
         } else {
             phoneUser.setBackgroundTintList(ColorStateList.valueOf(Color.RED));
         }
-        imgUrl = "";
+        imgUrl = "a";
 
             if(!address.getText().toString().equals("") && !porodaAnim.getText().toString().equals("")&&!datePropazhi.getText().toString().equals("")
                     && !opisanie.getText().toString().equals("") && !pol.getText().toString().equals("") && !nameAnim.getText().toString().equals("")
@@ -294,7 +301,7 @@ public class CreateAnimalsFragment extends Fragment {
         } else {
             phoneUser.setBackgroundTintList(ColorStateList.valueOf(Color.RED));
         }
-        imgUrl = "";
+        imgUrl = "a";
 
         if(!address.getText().toString().equals("") && !porodaAnim.getText().toString().equals("")&&!datePropazhi.getText().toString().equals("")
                 && !opisanie.getText().toString().equals("") && !pol.getText().toString().equals("") && !nameAnim.getText().toString().equals("")
@@ -326,7 +333,7 @@ public class CreateAnimalsFragment extends Fragment {
         } else {
             opisanie.setBackgroundTintList(ColorStateList.valueOf(Color.RED));
         }
-        imgUrl = "";
+        imgUrl = "a";
 
             if (!address.getText().toString().equals("") && !pol.getText().toString().equals("") && !opisanie.getText().toString().equals(""))
                 addToAnimalsDataBase(adress_potery, pol_anim, imgUrl, opisanie_anim);

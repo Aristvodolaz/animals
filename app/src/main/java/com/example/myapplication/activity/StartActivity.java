@@ -80,6 +80,7 @@ public class StartActivity extends AppCompatActivity {
                         editor.putString("phone", userSnapshot.child("phone").getValue(String.class));
                         editor.putString("age", userSnapshot.child("age").getValue(String.class));
                         editor.putString("city", userSnapshot.child("city").getValue(String.class));
+                        editor.putString("img", userSnapshot.child("img").getValue(String.class));
                         editor.apply();
                     }
                 }

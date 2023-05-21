@@ -42,6 +42,7 @@
     </FrameLayout>
 
     <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/avatar"
         android:src="@mipmap/logo"
         android:layout_width="100dp"
         android:layout_height="100dp"
