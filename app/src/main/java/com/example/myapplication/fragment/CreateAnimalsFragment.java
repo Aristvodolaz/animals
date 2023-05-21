@@ -60,9 +60,11 @@ public class CreateAnimalsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = LayoutInflater.from(getContext()).inflate(R.layout.create_lost_animals_layout, container, false);
-        firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReference = firebaseDatabase.getReference("Data");
+//        firebaseDatabase = FirebaseDatabase.getInstance();
+//        databaseReference = firebaseDatabase.getReference("Data");
 
+        // Initialize FirebaseFirestore
+        db = FirebaseFirestore.getInstance();
         tl = v.findViewById(R.id.tab_view);
         poroda = v.findViewById(R.id.poroda);
         klichka = v.findViewById(R.id.klichka_n);
@@ -165,25 +167,25 @@ public class CreateAnimalsFragment extends Fragment {
         });
     }
 
-    private void addToAnimalsDataBase(String adress_potery, String pol_anim, String imgUrl,
-                                          String opisanie_anim) {
-
+    private void addToAnimalsDataBase(String adress_potery, String pol_anim, String imgUrl, String opisanie_anim) {
         CollectionReference dbDrivers = db.collection("addAnimalsData");
-        Animals animals = new Animals(adress_potery ,imgUrl,pol_anim,opisanie_anim);
-        dbDrivers.add(animals).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-            @Override
-            public void onSuccess(DocumentReference documentReference) {
-                Toast.makeText(getContext(), "Ваше объявление успешно добавлено!", Toast.LENGTH_LONG).show();
-                getActivity().finish();
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(getContext(), "Произошла ошибка, попробуйте позднее!", Toast.LENGTH_LONG).show();
-            }
-
-        });
+        Animals animals = new Animals(adress_potery, imgUrl, pol_anim, opisanie_anim);
+        dbDrivers.add(animals)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        Toast.makeText(getContext(), "Ваше объявление успешно добавлено!", Toast.LENGTH_LONG).show();
+                        getActivity().finish();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getContext(), "Произошла ошибка, попробуйте позднее!", Toast.LENGTH_LONG).show();
+                    }
+                });
     }
+
     private void addKindHands() {
 
         poroda.setVisibility(View.VISIBLE);
