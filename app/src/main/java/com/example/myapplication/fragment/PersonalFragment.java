@@ -24,6 +24,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.ktx.Firebase;
+import com.squareup.picasso.Picasso;
 
 
 public class PersonalFragment extends Fragment {
@@ -32,7 +33,7 @@ public class PersonalFragment extends Fragment {
         return new PersonalFragment();
     }
     String name, surname, age, city, pol, phone, img;
-    ImageView backArrow;
+    ImageView backArrow, avatar;
     private DatabaseReference mDatabaseReference;
     private FirebaseDatabase mDatabase;
     private FirebaseAuth mAuth;
@@ -56,7 +57,7 @@ public class PersonalFragment extends Fragment {
         ageFr = v.findViewById(R.id.age);
         phoneFr = v.findViewById(R.id.phone);
         cityFr = v.findViewById(R.id.city);
-
+        avatar = v.findViewById(R.id.avatar);
         initViews();
         return v;
     }
@@ -74,7 +75,8 @@ public class PersonalFragment extends Fragment {
         phoneFr.setText(sp.getString("phone", phoneFr.toString()));
         ageFr.setText(sp.getString("age", ageFr.toString()));
         cityFr.setText(sp.getString("city", cityFr.toString()));
-        img =sp.getString("img", "");
+        Picasso.get().load(sp.getString("img", "")).into(avatar);
+//        img =sp.getString("img", "");
     }
 
 }

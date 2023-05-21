@@ -97,23 +97,23 @@ public class CreateAnimalsFragment extends Fragment {
         });
 
         initViewPager();
-        addAnimals();
+//        addPoteryashki();
         return v;
     }
     private void initViewPager() {
         for (int i = 0; i < label.length; i++) {
             tl.addTab(tl.newTab().setText(label[i]));
         }
-
+        addPoteryashki();
         tl.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 switch (tab.getPosition()) {
                     case 0:
-                        addAnimals();
+                        addPoteryashki();
                         break;
                     case 1:
-                        addPoteryashki();
+                        addAnimals();
                         break;
                     case 2:
                         addKindHands();
