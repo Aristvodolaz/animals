@@ -1,9 +1,12 @@
 package com.example.myapplication.fragment;
 
 
+import static android.content.ContentValues.TAG;
+
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,15 +28,22 @@ import com.example.myapplication.adapter.LostAnimals;
 import com.example.myapplication.adapter.PoteryashkiAnimalsAdapter;
 import com.example.myapplication.db.Animals;
 import com.example.myapplication.db.AnimalsLost;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import org.checkerframework.checker.units.qual.C;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class LostAnimalsFragment extends Fragment {
@@ -48,7 +58,7 @@ public class LostAnimalsFragment extends Fragment {
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
     List<AnimalsLost> data;
-    List<Animals> data_without_home;
+    List<Animals> animalsList;
     ImageView addInfo;
 
     String[] labels = {"ИЩЕМ ДОМ", "ПОТЕРЯШКИ", "ДОБРЫЕ РУКИ"};
@@ -67,7 +77,8 @@ public class LostAnimalsFragment extends Fragment {
             startActivity(i);
         });
         firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReference = firebaseDatabase.getReference("Data");
+        databaseReference = firebaseDatabase.getReference();
+//        databaseReference = firebaseDatabase.getReference("Data");
 
         initViews();
         getInfoLostAnimals();
@@ -84,6 +95,7 @@ public class LostAnimalsFragment extends Fragment {
                 switch (tab.getPosition()){
                     case 0:
                         getInfoLostAnimals();
+
                         break;
                     case 1:
                         getPoteryazhki();
@@ -141,81 +153,64 @@ public class LostAnimalsFragment extends Fragment {
         });
     }
 
-    //todo bezdomnye animals
+    //todo analogiya animals
     private void getPoteryazhki(){
 
-        databaseReference = firebaseDatabase.getReference("PoteryashkiAnimalsData");
-        databaseReference.addChildEventListener(new ChildEventListener() {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        CollectionReference collectionRef = db.collection("addAnimalsData");
+
+        collectionRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
-            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                Animals animalsData = snapshot.getValue(Animals.class);
-                data_without_home.add(animalsData);
-                if(data.isEmpty() || data == null){
-                    Toast.makeText(getContext(), "Список бездомных животных пуст", Toast.LENGTH_LONG).show();
-                } else  {
-                    PoteryashkiAnimalsAdapter adapter = new PoteryashkiAnimalsAdapter(getContext(), data_without_home);
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    List<Animals> animalsList = new ArrayList<>();
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        String name = document.getString("adress");
+                        String desc = document.getString("description");
+                        String pol = document.getString("pol");
+                        String img = document.getString("imgURL");
+                        Animals animal = new Animals(name, img, pol, desc);
+                        animalsList.add(animal);
+                    }
+
+//                    PoteryashkiAnimalsAdapter adapter = new PoteryashkiAnimalsAdapter(getContext(), animalsList);
+                    PoteryashkiAnimalsAdapter adapter = new PoteryashkiAnimalsAdapter(getContext(), animalsList);
                     rv.setLayoutManager(new LinearLayoutManager(getActivity()));
                     rv.setAdapter(adapter);
+
+                } else {
+                    Log.d(TAG, "Ошибка при получении данных из Firestore: " + task.getException());
                 }
             }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
+    });
     }
 
     //todo poteryvshiesya domashnie animals
     private void getInfoLostAnimals() {
-        databaseReference = firebaseDatabase.getReference("addAnimalsData");
-        databaseReference.addChildEventListener(new ChildEventListener() {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        CollectionReference collectionRef = db.collection("PoteryashkiAnimalsData");
+
+        collectionRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
-            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                AnimalsLost animalsData = snapshot.getValue(AnimalsLost.class);
-                data.add(animalsData);
-                if(data.isEmpty() || data == null){
-                    Toast.makeText(getContext(), "Список пропавших животных пуст", Toast.LENGTH_LONG).show();
-                } else  {
-                    LostAnimals adapter = new LostAnimals(getContext(), data);
-                    rv.setLayoutManager(new LinearLayoutManager(getActivity()));
-                    rv.setAdapter(adapter);
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    List<Animals> animalsList = new ArrayList<>();
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        String name = document.getString("adress");
+                        String desc = document.getString("description");
+                        String pol = document.getString("pol");
+                        String img = document.getString("imgURL");
+                        Animals animal = new Animals(name, img, pol, desc);
+                        animalsList.add(animal);
+                    }
+
+//                    PoteryashkiAnimalsAdapter adapter = new PoteryashkiAnimalsAdapter(getContext(), animalsList);
+//                    rv.setLayoutManager(new LinearLayoutManager(getActivity()));
+//                    rv.setAdapter(adapter);
+
+                } else {
+                    Log.d(TAG, "Ошибка при получении данных из Firestore: " + task.getException());
                 }
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
             }
         });
     }
