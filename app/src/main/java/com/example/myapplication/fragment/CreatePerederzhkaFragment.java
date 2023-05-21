@@ -65,7 +65,6 @@ public class CreatePerederzhkaFragment extends Fragment {
         db = FirebaseFirestore.getInstance();
         tl = v.findViewById(R.id.tab_view);
         tl.setSelectedTabIndicatorColor(ContextCompat.getColor(getContext(), R.color.color_for_reg));
-
         tl.setTabIndicatorFullWidth(true);
 
         price = v.findViewById(R.id.price_line);

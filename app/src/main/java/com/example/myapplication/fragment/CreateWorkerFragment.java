@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.myapplication.R;
@@ -59,6 +60,8 @@ public class CreateWorkerFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = LayoutInflater.from(getContext()).inflate(R.layout.create_work_layout, container, false);
         tl = v.findViewById(R.id.tab_view);
+        tl.setSelectedTabIndicatorColor(ContextCompat.getColor(getContext(), R.color.color_for_reg));
+        tl.setTabIndicatorFullWidth(true);
         backArrow = v.findViewById(R.id.back_arrow);
         addressET = v.findViewById(R.id.user_addres);
         nameET = v.findViewById(R.id.name_uesr);

@@ -36,6 +36,7 @@ public class PerederzhkaAdapter extends RecyclerView.Adapter<PerederzhkaAdapter.
     @Override
     public void onBindViewHolder(@NonNull PerederzhkaAdapter.LabelHolder holder, int position) {
         holder.name.setText( data.get(position).getName() + " " + data.get(position).getSurname().substring(0, 1) + ". ");
+        holder.city.setText("Город: "+data.get(position).getCity());
         holder.phone.setText(data.get(position).getPhone());
         holder.type_animals.setText("Тип животного: " + data.get(position).getType_animals());
         holder.description.setText("Описание: " + data.get(position).getDescription());

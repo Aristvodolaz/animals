@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -64,6 +65,8 @@ public class WorkFragment extends Fragment {
         View v = LayoutInflater.from(getContext()).inflate(R.layout.work_layout, container, false);
         rv = v.findViewById(R.id.recycler_view);
         tl = v.findViewById(R.id.tab_view);
+        tl.setSelectedTabIndicatorColor(ContextCompat.getColor(getContext(), R.color.color_for_reg));
+        tl.setTabIndicatorFullWidth(true);
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference("Data");
         addInfo = v.findViewById(R.id.add_info);
