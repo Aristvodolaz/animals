@@ -1,7 +1,10 @@
 package com.example.myapplication.fragment;
 
+import static android.content.ContentValues.TAG;
+
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,14 +24,22 @@ import com.example.myapplication.activity.CreateFormAnimalsActivity;
 import com.example.myapplication.activity.StartActivity;
 import com.example.myapplication.adapter.NeedPerederzhkaAdapter;
 import com.example.myapplication.adapter.PerederzhkaAdapter;
+import com.example.myapplication.adapter.PoteryashkiAnimalsAdapter;
+import com.example.myapplication.db.Animals;
 import com.example.myapplication.db.NeedPerderzhka;
 import com.example.myapplication.db.Perederzhka;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,7 +73,7 @@ public class PerederzhkaFragment extends Fragment {
         addInfo = v.findViewById(R.id.add_info);
         addInfo.setOnClickListener(view->{
             Intent i = new Intent(getActivity(), CreateFormAnimalsActivity.class);
-            i.putExtra("type_info", 3);
+            i.putExtra("type_info", 2);
             startActivity(i);
         });
 
@@ -110,87 +121,71 @@ public class PerederzhkaFragment extends Fragment {
 
 
     private void getPerederzhka() {
-        data = new ArrayList<>();
-        databaseReference = firebaseDatabase.getReference("PerederzhkaAnimalsData");
-        databaseReference.addChildEventListener(new ChildEventListener() {
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        CollectionReference collectionRef = db.collection("PerederzhkaAnimalsData");
+
+        collectionRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
-            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                Perederzhka perederzhka = snapshot.getValue(Perederzhka.class);
-                data.add(perederzhka);
-                if (data.isEmpty() || data == null) {
-                    Toast.makeText(getContext(), "Список предложений пуст", Toast.LENGTH_LONG).show();
-                } else {
-                    PerederzhkaAdapter adapter = new PerederzhkaAdapter(getContext(), data);
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    List<Perederzhka> animalsList = new ArrayList<>();
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        String name = document.getString("name");
+                        String surname = document.getString("surname");
+                        String phone = document.getString("phone");
+                        String city = document.getString("city");
+                        String type_animals = document.getString("type_animals");
+                        String description = document.getString("description");
+                        String imgURL = document.getString("imgURL");
+                        String price = document.getString("price");
+                        Perederzhka animal = new Perederzhka(name, surname, phone, city, type_animals, description, imgURL, price);
+                        animalsList.add(animal);
+                    }
+
+//                    PoteryashkiAnimalsAdapter adapter = new PoteryashkiAnimalsAdapter(getContext(), animalsList);
+                    PerederzhkaAdapter adapter = new PerederzhkaAdapter(getContext(), animalsList);
                     rv.setLayoutManager(new LinearLayoutManager(getActivity()));
                     rv.setAdapter(adapter);
+
+                } else {
+                    Log.d(TAG, "Ошибка при получении данных из Firestore: " + task.getException());
                 }
             }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-
-            // Остальные методы ChildEventListener...
-
         });
     }
 
     private void getNeedPerederzhka() {
-        data_need = new ArrayList<>();
 
-        databaseReference = firebaseDatabase.getReference("PerederzhkaAnimalsNeedData");
-        databaseReference.addChildEventListener(new ChildEventListener() {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        CollectionReference collectionRef = db.collection("PerederzhkaAnimalsNeedData");
+
+        collectionRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
-            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                NeedPerderzhka needPerderzhka = snapshot.getValue(NeedPerderzhka.class);
-                data_need.add(needPerderzhka);
-                if (data_need.isEmpty() || data_need == null) {
-                    Toast.makeText(getContext(), "Список предложений пуст", Toast.LENGTH_LONG).show();
-                } else {
-                    NeedPerederzhkaAdapter adapter = new NeedPerederzhkaAdapter(getContext(), data_need);
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    List<NeedPerderzhka> animalsList = new ArrayList<>();
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        String name = document.getString("name");
+                        String surname = document.getString("surname");
+                        String phone = document.getString("phone");
+                        String type_animals = document.getString("type_animals");
+                        String poroda_animals = document.getString("poroda_animals");
+                        String days = document.getString("days");
+                        String city = document.getString("city");
+                        NeedPerderzhka animal = new NeedPerderzhka(name, surname, phone, type_animals, poroda_animals, days, city);
+                        animalsList.add(animal);
+                    }
+
+//                    PoteryashkiAnimalsAdapter adapter = new PoteryashkiAnimalsAdapter(getContext(), animalsList);
+                    NeedPerederzhkaAdapter adapter = new NeedPerederzhkaAdapter(getContext(), animalsList);
                     rv.setLayoutManager(new LinearLayoutManager(getActivity()));
                     rv.setAdapter(adapter);
+
+                } else {
+                    Log.d(TAG, "Ошибка при получении данных из Firestore: " + task.getException());
                 }
             }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-
-            // Остальные методы ChildEventListener...
-
         });
     }
 }

@@ -19,7 +19,8 @@ public class Perederzhka {
         this.imgURL = imgURL;
     }
 
-    public Perederzhka(String name, String surname, String phone, String city, String type_animals, String description, String imgURL, String price) {
+    public Perederzhka(String name, String surname, String phone, String city,
+                       String type_animals, String description, String imgURL, String price) {
         this.name = name;
         this.surname = surname;
         this.phone = phone;

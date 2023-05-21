@@ -6,10 +6,10 @@ public class NeedPerderzhka {
     String phone;
     String type_animals;
     String poroda_animals;
-    int days;
+    String days;
     String city;
 
-    public NeedPerderzhka(String name, String surname, String phone, String type_animals, String poroda_animals, int days, String city) {
+    public NeedPerderzhka(String name, String surname, String phone, String type_animals, String poroda_animals, String days, String city) {
         this.name = name;
         this.surname = surname;
         this.phone = phone;
@@ -59,11 +59,11 @@ public class NeedPerderzhka {
         this.poroda_animals = poroda_animals;
     }
 
-    public int getDays() {
+    public String getDays() {
         return days;
     }
 
-    public void setDays(int days) {
+    public void setDays(String days) {
         this.days = days;
     }
 

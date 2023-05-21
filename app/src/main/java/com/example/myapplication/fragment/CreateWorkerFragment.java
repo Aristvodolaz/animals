@@ -117,7 +117,7 @@ public class CreateWorkerFragment extends Fragment {
     }
 
     private void addToNeedDataBase(String name, String surname, String phone, String adress, String anim,
-                                        String poroda, String days) {
+                                   String poroda, String days) {
         db = FirebaseFirestore.getInstance(); // Раскомментируйте эту строку для инициализации объекта db
         CollectionReference dbDrivers = db.collection("WorkingNeedData");
         NeedWorking needWorking = new NeedWorking(name, surname,phone,adress,anim,poroda,days);
@@ -136,7 +136,7 @@ public class CreateWorkerFragment extends Fragment {
     }
 
     private void addToWorkDataBase(String name, String surname, String phone, String age, String city, String zadacha,
-                                  String imgUrl, String price) {
+                                   String imgUrl, String price) {
         db = FirebaseFirestore.getInstance();
         CollectionReference dbDrivers = db.collection("WorkingPersonData");
         Working working = new Working(name ,surname,phone,age, city,zadacha,imgUrl,price);

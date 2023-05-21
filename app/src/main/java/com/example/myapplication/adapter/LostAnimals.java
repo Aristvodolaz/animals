@@ -1,6 +1,5 @@
 package com.example.myapplication.adapter;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,7 +32,6 @@ public class LostAnimals extends RecyclerView.Adapter<LostAnimals.LabelHolder> {
         return new LabelHolder(v);
     }
 
-//    @SuppressLint("SuspiciousIndentation")
     @Override
     public void onBindViewHolder(@NonNull LostAnimals.LabelHolder holder, int position) {
         holder.name.setText("Кличка: " + data.get(position).getName() +" (" +data.get(position).getPol()+")");
@@ -43,9 +41,8 @@ public class LostAnimals extends RecyclerView.Adapter<LostAnimals.LabelHolder> {
         holder.datePropazhi.setText("Дата пропажи: "+data.get(position).getDate_prodazhi());
         holder.userName.setText(data.get(position).getNameUser());
         holder.userPhone.setText(data.get(position).getPhoneUser());
-        if(!data.get(position).getImgURL().equals("") || data.get(position).getImgURL()!=null) {
-            Picasso.get().load(data.get(position).getImgURL()).into(holder.img);
-        }
+        if(!data.get(position).getImgURL().equals("") || data.get(position).getImgURL()!=null)
+        Picasso.get().load(data.get(position).getImgURL()).into(holder.img);
     }
 
     @Override

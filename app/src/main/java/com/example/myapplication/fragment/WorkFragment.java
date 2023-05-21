@@ -164,7 +164,7 @@ public class WorkFragment extends Fragment {
                         String work = document.getString("work");
                         String phone = document.getString("phone");
                         String price = document.getString("price");
-                        String img = document.getString("img");
+                        String img = document.getString("imgURL");
                         Working animal = new Working(name, surname, phone, age, city, work,img, price);
                         data.add(animal);
                     }
