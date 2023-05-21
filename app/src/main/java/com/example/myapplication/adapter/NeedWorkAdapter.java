@@ -4,12 +4,15 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.R;
 import com.example.myapplication.db.NeedWorking;
+
+import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -32,7 +35,12 @@ public class NeedWorkAdapter extends RecyclerView.Adapter<NeedWorkAdapter.LableH
 
     @Override
     public void onBindViewHolder(@NonNull NeedWorkAdapter.LableHolder holder, int position) {
-
+        holder.address.setText("Адрес: "+ data.get(position).getAddress());
+        holder.animals.setText("Животное: "+data.get(position).getAnimals());
+        holder.poroda.setText("Порода: " + data.get(position).getPoroda());
+        holder.days.setText("Количество дней: "+ data.get(position).getDays());
+        holder.name.setText(data.get(position).getName() + data.get(position).getSurname().substring(0,1)+". ");
+        holder.phone.setText(data.get(position).getPhone());
     }
 
     @Override
@@ -41,8 +49,17 @@ public class NeedWorkAdapter extends RecyclerView.Adapter<NeedWorkAdapter.LableH
     }
 
     public class LableHolder extends RecyclerView.ViewHolder {
+
+        TextView address, name, phone, animals, poroda,days;
         public LableHolder(@NonNull View itemView) {
             super(itemView);
+            address = itemView.findViewById(R.id.address);
+            animals = itemView.findViewById(R.id.animals);
+            poroda = itemView.findViewById(R.id.poroda);
+            days = itemView.findViewById(R.id.price);
+            name = itemView.findViewById(R.id.name_user);
+            phone = itemView.findViewById(R.id.num_user);
+
         }
     }
 }

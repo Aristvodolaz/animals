@@ -1,44 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView  xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_marginLeft="8dp"
+    android:layout_marginRight="8dp"
+    android:layout_marginTop="4dp"
+    android:layout_height="wrap_content">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-        <FrameLayout
-            android:id="@+id/sigin"
-            android:padding="16dp"
+
+        <LinearLayout
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="16dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#e69105">
+            android:orientation="horizontal">
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/img"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@mipmap/logo"/>
             <LinearLayout
+                android:layout_gravity="center"
+                android:layout_marginLeft="16dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:id="@+id/back_arrow"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@drawable/barrow"/>
+                android:orientation="vertical">
                 <TextView
-                    android:textSize="18sp"
-                    android:textColor="@color/black"
-                    android:layout_marginLeft="16dp"
-                    android:layout_width="wrap_content"
+                    android:textSize="16dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="РАБОТА"/>
+                    android:text="Выгул животного"/>
+                <TextView
+                    android:textSize="14dp"
+                    android:id="@+id/animals"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Животное: "/>
+                <TextView
+                    android:textSize="14dp"
+                    android:id="@+id/poroda"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Порода: "/>
+                <TextView
+                    android:textSize="14dp"
+                    android:id="@+id/days"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Количество дней:"/>
+                <TextView
+                    android:textSize="14dp"
+                    android:id="@+id/address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Адрес: "/>
+
             </LinearLayout>
-        </FrameLayout>
-        <com.google.android.material.tabs.TabLayout
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/color_for_log_backgr"/>
+        <LinearLayout
+            android:layout_marginTop="4dp"
+            android:gravity="end"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="16dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/tab_view"/>
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/recycler_view"/>
+            android:orientation="horizontal">
+            <TextView
+                android:layout_marginRight="8dp"
+                android:textSize="14dp"
+                android:id="@+id/name_user"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Наталья П."/>
+            <TextView
+                android:layout_marginRight="10dp"
+                android:textSize="14dp"
+                android:id="@+id/num_user"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" +7962056874"/>
+        </LinearLayout>
     </LinearLayout>
-    </ScrollView>
+</androidx.cardview.widget.CardView>

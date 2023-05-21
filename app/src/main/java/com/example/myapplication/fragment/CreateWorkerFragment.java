@@ -2,10 +2,13 @@ package com.example.myapplication.fragment;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -37,7 +40,8 @@ public class CreateWorkerFragment extends Fragment {
     private FirebaseFirestore db;
     ImageView addInfo;
 
-    String name,surname, phone, address, zadacha,description, min_price, max_price, age, city, price, imgUrl;
+    String name,surname, phone, address, zadacha,anim, min_price, max_price, age, city, price, imgUrl, poroda, days;
+    EditText nameET, surnameET, phoneET ,addressET, animalET, ageET, cityET, priceET , porodaET, daysET;
     ImageView backArrow;
     String[] labels = {"МЫ ИЩЕМ РАБОТУ","МЫ НУЖДАЕМСЯ В УСЛУГЕ"};
     public static CreateWorkerFragment newInstance() {
@@ -83,11 +87,11 @@ public class CreateWorkerFragment extends Fragment {
         });
     }
 
-    private void addToNeedDataBase(String name, String surname, String phone, String adress, String zadacha,
-                                        String description, String min_price, String max_price) {
-
+    private void addToNeedDataBase(String name, String surname, String phone, String adress, String anim,
+                                        String poroda, String days) {
+        db = FirebaseFirestore.getInstance(); // Раскомментируйте эту строку для инициализации объекта db
         CollectionReference dbDrivers = db.collection("WorkingNeedData");
-        NeedWorking needWorking = new NeedWorking(name ,surname,phone,adress,zadacha,description,min_price,max_price);
+        NeedWorking needWorking = new NeedWorking(name, surname,phone,adress,anim,poroda,days);
         dbDrivers.add(needWorking).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
             @Override
             public void onSuccess(DocumentReference documentReference) {
@@ -99,7 +103,6 @@ public class CreateWorkerFragment extends Fragment {
             public void onFailure(@NonNull Exception e) {
                 Toast.makeText(getContext(), "Произошла ошибка, попробуйте позднее!", Toast.LENGTH_LONG).show();
             }
-
         });
     }
 
@@ -123,8 +126,37 @@ public class CreateWorkerFragment extends Fragment {
         });
     }
     private void addNeedWorker() {
-
-        addToNeedDataBase(name, surname,phone,address,zadacha,description,min_price, max_price);
+        if (!address.getText().toString().equals("") || address.getText() != null) {
+            adress_potery = address.getText().toString();
+        } else {
+            address.setBackgroundTintList(ColorStateList.valueOf(Color.RED));
+        }
+        if (!porodaAnim.getText().toString().equals("") || porodaAnim.getText() != null) {
+            poroda_anim = porodaAnim.getText().toString();
+        } else {
+            porodaAnim.setBackgroundTintList(ColorStateList.valueOf(Color.RED));
+        }
+        if (!datePropazhi.getText().toString().equals("") || datePropazhi.getText() != null) {
+            date_prodazhi = datePropazhi.getText().toString();
+        } else {
+            datePropazhi.setBackgroundTintList(ColorStateList.valueOf(Color.RED));
+        }
+        if (!opisanie.getText().toString().equals("") || opisanie.getText() != null) {
+            opisanie_anim = opisanie.getText().toString();
+        } else {
+            opisanie.setBackgroundTintList(ColorStateList.valueOf(Color.RED));
+        }
+        if (!pol.getText().toString().equals("") || pol.getText() != null) {
+            pol_anim = pol.getText().toString();
+        } else {
+            pol.setBackgroundTintList(ColorStateList.valueOf(Color.RED));
+        }
+        if (!nameAnim.getText().toString().equals("") || nameAnim.getText() != null) {
+            name_anim = nameAnim.getText().toString();
+        } else {
+            nameAnim.setBackgroundTintList(ColorStateList.valueOf(Color.RED));
+        }
+        addToNeedDataBase(name, surname,phone,address,anim,poroda,days);
 
     }
 

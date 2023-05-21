@@ -1,8 +1,11 @@
 package com.example.myapplication.fragment;
 
+import static android.content.ContentValues.TAG;
+
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,16 +22,25 @@ import com.example.myapplication.R;
 import com.example.myapplication.activity.CreateFormAnimalsActivity;
 import com.example.myapplication.activity.StartActivity;
 import com.example.myapplication.adapter.NeedWorkAdapter;
+import com.example.myapplication.adapter.PoteryashkiAnimalsAdapter;
 import com.example.myapplication.adapter.WorkAdapter;
+import com.example.myapplication.db.Animals;
 import com.example.myapplication.db.NeedWorking;
 import com.example.myapplication.db.Working;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class WorkFragment extends Fragment {
@@ -103,79 +115,69 @@ public class WorkFragment extends Fragment {
 
     private void getNeedWorking() {
 
-        databaseReference = firebaseDatabase.getReference("WorkingNeedData");
-        databaseReference.addChildEventListener(new ChildEventListener() {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        CollectionReference collectionRef = db.collection("WorkingNeedData");
+
+        collectionRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
-            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                NeedWorking dataWorking = snapshot.getValue(NeedWorking.class);
-                data_need.add(dataWorking);
-                if (data_need.isEmpty() || data_need == null) {
-                    Toast.makeText(getContext(), "Список предложений пуст", Toast.LENGTH_LONG).show();
-                } else {
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    List<NeedWorking> data_need = new ArrayList<>();
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        String name = document.getString("name");
+                        String surname = document.getString("surname");
+                        String anim = document.getString("animals");
+                        String poroda = document.getString("poroda");
+                        String days = document.getString("days");
+                        String phone = document.getString("phone");
+                        String address = document.getString("address");
+                        NeedWorking animal = new NeedWorking(name, surname,phone,address,anim,poroda,days);
+                        data_need.add(animal);
+                    }
+
+//                    PoteryashkiAnimalsAdapter adapter = new PoteryashkiAnimalsAdapter(getContext(), animalsList);
                     NeedWorkAdapter adapter = new NeedWorkAdapter(getContext(), data_need);
                     rv.setLayoutManager(new LinearLayoutManager(getActivity()));
                     rv.setAdapter(adapter);
+
+                } else {
+                    Log.d(TAG, "Ошибка при получении данных из Firestore: " + task.getException());
                 }
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
             }
         });
     }
 
     private void getWorking() {
-        databaseReference = firebaseDatabase.getReference("WorkingPersonData");
-        databaseReference.addChildEventListener(new ChildEventListener() {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        CollectionReference collectionRef = db.collection("WorkingPersonData");
+
+        collectionRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
-            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                Working dataWorking = snapshot.getValue(Working.class);
-                data.add(dataWorking);
-                if (data.isEmpty() || data == null) {
-                    Toast.makeText(getContext(), "Список предложений пуст", Toast.LENGTH_LONG).show();
-                } else {
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    List<Working> data = new ArrayList<>();
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        String name = document.getString("name");
+                        String surname = document.getString("surname");
+                        String age = document.getString("age");
+                        String city = document.getString("city");
+                        String work = document.getString("work");
+                        String phone = document.getString("phone");
+                        String price = document.getString("price");
+                        String img = document.getString("img");
+                        Working animal = new Working(name, surname, phone, age, city, work,img, price);
+                        data.add(animal);
+                    }
+
+//                    PoteryashkiAnimalsAdapter adapter = new PoteryashkiAnimalsAdapter(getContext(), animalsList);
                     WorkAdapter adapter = new WorkAdapter(getContext(), data);
                     rv.setLayoutManager(new LinearLayoutManager(getActivity()));
                     rv.setAdapter(adapter);
+
+                } else {
+                    Log.d(TAG, "Ошибка при получении данных из Firestore: " + task.getException());
                 }
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
             }
         });
     }
-        //todo sdelat po analogii s LostAnimalsFragment + dodelat po analogii adapter + sverstat .xml
 }
