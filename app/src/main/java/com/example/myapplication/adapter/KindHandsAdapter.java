@@ -40,7 +40,7 @@ public class KindHandsAdapter extends RecyclerView.Adapter<KindHandsAdapter.Labe
         holder.name.setText("Кличка: " + data.get(position).getName() +" (" +data.get(position).getPol()+")");
         holder.poroda.setText("Порода: "+ data.get(position).getPoroda());
         holder.descriprion.setText("Описание: "+data.get(position).getDescription());
-        holder.address.setText("Адрес пропажи: "+data.get(position).getAdress());
+//        holder.address.setText("Адрес пропажи: "+data.get(position).getAdress());
         holder.datePropazhi.setText("Дата пропажи: "+data.get(position).getDate_prodazhi());
         holder.userName.setText(data.get(position).getNameUser());
         holder.userPhone.setText(data.get(position).getPhoneUser());
