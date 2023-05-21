@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,6 +18,7 @@ import com.example.myapplication.activity.MainActivity;
 
 public class ChoiceRegFragment extends Fragment {
     Button workBtn, userBtn, peredBtn, priutBtn, klinnikaBtn;
+    TextView logNowBtn;
     public static ChoiceRegFragment newInstance() {
         return new ChoiceRegFragment();
     }
@@ -31,6 +33,7 @@ public class ChoiceRegFragment extends Fragment {
         peredBtn = v.findViewById(R.id.pered_btn);
         priutBtn =v.findViewById(R.id.priut_btn);
         klinnikaBtn = v.findViewById(R.id.klinnika_btn);
+        logNowBtn = v.findViewById(R.id.loginNowBtn);
 
         userBtn.setOnClickListener(view -> {
             ((MainActivity) getActivity()).replaceFragment(RegistrationFragmentKt.Companion.newInstance(0), false);
@@ -40,6 +43,10 @@ public class ChoiceRegFragment extends Fragment {
         });
         peredBtn.setOnClickListener(view -> {
             ((MainActivity) getActivity()).replaceFragment(RegistrationFragmentKt.Companion.newInstance(2), false);
+        });
+
+        logNowBtn.setOnClickListener(view -> {
+            ((MainActivity) getActivity()).replaceFragment(LoginFragmentKt.Companion.newInstance(), false);
         });
 
 //        todo in development

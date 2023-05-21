@@ -12,6 +12,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
+            <ImageView
+                android:id="@+id/back_arrow"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginTop="13dp"
+                android:layout_marginLeft="8dp"
+                android:src="@drawable/barrow"/>
             <TextView
                 android:layout_marginLeft="24dp"
                 android:textColor="#1a1c20"
@@ -32,46 +39,110 @@
         android:layout_gravity="center"
         android:layout_marginTop="24dp"
         android:layout_marginBottom="24dp"/>
-    <TextView
-        android:textColor="#25211B"
-        android:textSize="24dp"
-        android:gravity="center"
-        android:id="@+id/name"
+    <TableLayout
+        android:id="@+id/tl_data"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Name"/>
-    <TextView
-        android:textColor="#25211B"
-        android:textSize="18dp"
-        android:layout_marginTop="8dp"
-        android:gravity="center"
-        android:id="@+id/surname"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Surname"/>
-    <TextView
-        android:textColor="#25211B"
-        android:textSize="16dp"
-        android:layout_marginTop="8dp"
-        android:gravity="center"
-        android:id="@+id/age"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="31 years"/>
-    <TextView
-        android:textSize="16dp"
-        android:layout_marginTop="8dp"
-        android:gravity="center"
-        android:id="@+id/phone"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="+798523698"/>
-    <TextView
-        android:textSize="16dp"
-        android:layout_marginTop="12dp"
-        android:gravity="center"
-        android:id="@+id/city"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Hamburg"/>
+        android:layout_height="wrap_content">
+
+        <TableRow
+            android:gravity="center">
+            <TextView
+                android:textColor="#25211B"
+                android:textSize="20dp"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Name: "/>
+            <TextView
+                android:textColor="#25211B"
+                android:textSize="20dp"
+                android:gravity="center"
+                android:id="@+id/name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </TableRow>
+
+        <TableRow
+            android:gravity="center">
+            <TextView
+                android:textColor="#25211B"
+                android:textSize="20dp"
+                android:layout_marginTop="8dp"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Surname: "/>
+            <TextView
+                android:textColor="#25211B"
+                android:textSize="20dp"
+                android:layout_marginTop="8dp"
+                android:gravity="center"
+                android:id="@+id/surname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </TableRow>
+
+        <TableRow
+            android:gravity="center">
+            <TextView
+                android:textColor="#25211B"
+                android:textSize="20dp"
+                android:layout_marginTop="8dp"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Years old: "/>
+            <TextView
+                android:textColor="#25211B"
+                android:textSize="16dp"
+                android:layout_marginTop="8dp"
+                android:gravity="center"
+                android:id="@+id/age"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
+        </TableRow>
+
+        <TableRow
+            android:gravity="center">
+            <TextView
+                android:textColor="#25211B"
+                android:textSize="20dp"
+                android:layout_marginTop="8dp"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Phone: "/>
+            <TextView
+                android:textColor="#25211B"
+                android:textSize="20dp"
+                android:layout_marginTop="8dp"
+                android:gravity="center"
+                android:id="@+id/phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text=""/>
+        </TableRow>
+
+        <TableRow
+            android:gravity="center">
+            <TextView
+                android:textColor="#25211B"
+                android:textSize="20dp"
+                android:layout_marginTop="5dp"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="City: "/>
+            <TextView
+                android:textColor="#25211B"
+                android:textSize="20dp"
+                android:layout_marginTop="5dp"
+                android:gravity="center"
+                android:id="@+id/city"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text=""/>
+        </TableRow>
+    </TableLayout>
 </LinearLayout>

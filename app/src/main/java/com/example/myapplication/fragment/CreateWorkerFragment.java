@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.myapplication.R;
 import com.example.myapplication.activity.CreateFormAnimalsActivity;
+import com.example.myapplication.activity.StartActivity;
 import com.example.myapplication.db.AnimalsLost;
 import com.example.myapplication.db.NeedWorking;
 import com.example.myapplication.db.Working;
@@ -37,6 +38,7 @@ public class CreateWorkerFragment extends Fragment {
     ImageView addInfo;
 
     String name,surname, phone, address, zadacha,description, min_price, max_price, age, city, price, imgUrl;
+    ImageView backArrow;
     String[] labels = {"МЫ ИЩЕМ РАБОТУ","МЫ НУЖДАЕМСЯ В УСЛУГЕ"};
     public static CreateWorkerFragment newInstance() {
         return new CreateWorkerFragment();
@@ -48,7 +50,11 @@ public class CreateWorkerFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = LayoutInflater.from(getContext()).inflate(R.layout.create_work_layout, container, false);
         tl = v.findViewById(R.id.tab_view);
-
+        backArrow = v.findViewById(R.id.back_arrow);
+        backArrow.setOnClickListener(view -> {
+            Intent intent = new Intent(getActivity(), StartActivity.class);
+            startActivity(intent);
+        });
         initViews();
         addWork();
         return v;

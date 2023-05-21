@@ -104,7 +104,7 @@ class RegistrationFragmentKt : Fragment() {
         userEmail = view?.findViewById(R.id.user_email) as EditText
         userPassword = view?.findViewById(R.id.user_password) as EditText
         userDoublePass = view?.findViewById(R.id.double_user_password) as EditText
-        userCity = view?.findViewById(R.id.user_city) as EditText
+        userCity = view?.findViewById(R.id.user_сity) as EditText
         progressBar = ProgressDialog(getContext())
 
         mDatabase = FirebaseDatabase.getInstance()
@@ -119,11 +119,12 @@ class RegistrationFragmentKt : Fragment() {
         surname = userSurname?.text.toString()
         age = userAge?.text.toString()
         phone = userPhone?.text.toString()
+        city = userCity?.text.toString()
         email = userEmail?.text.toString()
         password = userPassword?.text.toString()
         double_password = userDoublePass?.text.toString()
         if (!TextUtils.isEmpty(name) && !TextUtils.isEmpty(surname) && !TextUtils.isEmpty(age) &&
-            !TextUtils.isEmpty(phone) && !TextUtils.isEmpty(email) &&
+            !TextUtils.isEmpty(phone) && !TextUtils.isEmpty(city) && !TextUtils.isEmpty(email) &&
             !TextUtils.isEmpty(password)
         ) {
         if(double_password.equals(password)) {
@@ -160,6 +161,7 @@ class RegistrationFragmentKt : Fragment() {
                             currentUserIdBb.child("surname").setValue(surname)
                             currentUserIdBb.child("age").setValue(age)
                             currentUserIdBb.child("phone").setValue(phone)
+                            currentUserIdBb.child("city").setValue(city)
                             currentUserIdBb.child("email").setValue(email)
                             currentUserIdBb.child("password").setValue(password)
 
@@ -206,6 +208,8 @@ class RegistrationFragmentKt : Fragment() {
                 userAge?.backgroundTintList = ColorStateList.valueOf(Color.RED);
             if (TextUtils.isEmpty(phone))
                 userPhone?.backgroundTintList = ColorStateList.valueOf(Color.RED);
+            if (TextUtils.isEmpty(city))
+                userCity?.backgroundTintList = ColorStateList.valueOf(Color.RED);
             if (TextUtils.isEmpty(email))
                 userEmail?.backgroundTintList = ColorStateList.valueOf(Color.RED);
         }

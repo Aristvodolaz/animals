@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.R;
 import com.example.myapplication.activity.CreateFormAnimalsActivity;
+import com.example.myapplication.activity.StartActivity;
 import com.example.myapplication.adapter.NeedWorkAdapter;
 import com.example.myapplication.adapter.WorkAdapter;
 import com.example.myapplication.db.NeedWorking;
@@ -42,7 +43,7 @@ public class WorkFragment extends Fragment {
     DatabaseReference databaseReference;
     List<Working> data;
     List<NeedWorking> data_need;
-    ImageView addInfo;
+    ImageView addInfo, backArrow;
 
     @SuppressLint("MissingInflatedId")
     @Nullable
@@ -58,6 +59,12 @@ public class WorkFragment extends Fragment {
             Intent i = new Intent(getActivity(), CreateFormAnimalsActivity.class);
             i.putExtra("type_info", 1);
             startActivity(i);
+        });
+        backArrow = v.findViewById(R.id.back_arrow);
+
+        backArrow.setOnClickListener(view -> {
+            Intent intent = new Intent(getActivity(), StartActivity.class);
+            startActivity(intent);
         });
         initViews();
         getWorking();

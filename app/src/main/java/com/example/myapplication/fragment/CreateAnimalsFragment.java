@@ -1,6 +1,7 @@
 package com.example.myapplication.fragment;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,6 +20,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.myapplication.R;
+import com.example.myapplication.activity.StartActivity;
 import com.example.myapplication.db.Animals;
 import com.example.myapplication.db.AnimalsLost;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -45,6 +48,7 @@ public class CreateAnimalsFragment extends Fragment {
     EditText address, porodaAnim, datePropazhi, pol, opisanie, nameAnim, nameUser, phoneUser;
     TextView mesto;
     String adress_potery, poroda_anim, date_prodazhi, pol_anim, imgUrl, opisanie_anim, name_anim, name_user, phone_user;
+    ImageView backArrow;
     private FirebaseFirestore db;
     //todo sddelat formu dlya zhivotnyx
     public static CreateAnimalsFragment newInstance() {
@@ -79,6 +83,13 @@ public class CreateAnimalsFragment extends Fragment {
 
         addZapis = v.findViewById(R.id.add_zapis);
         addPhoto = v.findViewById(R.id.add_photo);
+
+        backArrow = v.findViewById(R.id.back_arrow);
+
+        backArrow.setOnClickListener(view -> {
+            Intent intent = new Intent(getActivity(), StartActivity.class);
+            startActivity(intent);
+        });
 
         initViewPager();
         addAnimals();
