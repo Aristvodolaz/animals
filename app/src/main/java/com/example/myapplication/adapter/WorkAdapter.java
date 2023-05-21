@@ -5,6 +5,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.R;
 import com.example.myapplication.db.Working;
+import com.squareup.picasso.Picasso;
 
 import java.util.Collections;
 import java.util.List;
@@ -41,6 +43,7 @@ public class WorkAdapter extends RecyclerView.Adapter<WorkAdapter.LabelHolder> {
         holder.work.setText(data.get(position).getWork());
         holder.city.setText("Город: "+data.get(position).getCity());
         holder.price.setText("Цена: " + data.get(position).getPrice());
+        Picasso.get().load(data.get(position).getImgURL()).into(holder.img);
     }
 
     @Override
@@ -50,6 +53,7 @@ public class WorkAdapter extends RecyclerView.Adapter<WorkAdapter.LabelHolder> {
 
     public class LabelHolder extends RecyclerView.ViewHolder{
 
+        ImageView img;
         TextView work, price, city, age, name, phone;
 
         public LabelHolder(@NonNull View itemView) {
@@ -61,6 +65,7 @@ public class WorkAdapter extends RecyclerView.Adapter<WorkAdapter.LabelHolder> {
             age = itemView.findViewById(R.id.age);
             name = itemView.findViewById(R.id.name_user);
             phone = itemView.findViewById(R.id.num_user);
+            img = itemView.findViewById(R.id.img);
         }
     }
 }
