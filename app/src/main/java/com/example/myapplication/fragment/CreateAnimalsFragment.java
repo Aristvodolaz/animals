@@ -156,23 +156,25 @@ public class CreateAnimalsFragment extends Fragment {
         });
     }
 
-    private void addToAnimalsDataBase(String adress_potery, String pol_anim, String imgUrl, String opisanie_anim) {
+
+    //todo sdelat po analogii
+    private void addToAnimalsDataBase(String adress_potery, String pol_anim, String imgUrl,
+                                      String opisanie_anim) {
+        db = FirebaseFirestore.getInstance(); // Раскомментируйте эту строку для инициализации объекта db
         CollectionReference dbDrivers = db.collection("addAnimalsData");
-        Animals animals = new Animals(adress_potery, imgUrl, pol_anim, opisanie_anim);
-        dbDrivers.add(animals)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                    @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        Toast.makeText(getContext(), "Ваше объявление успешно добавлено!", Toast.LENGTH_LONG).show();
-                        getActivity().finish();
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(getContext(), "Произошла ошибка, попробуйте позднее!", Toast.LENGTH_LONG).show();
-                    }
-                });
+        Animals animals = new Animals(adress_potery ,imgUrl,pol_anim,opisanie_anim);
+        dbDrivers.add(animals).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+            @Override
+            public void onSuccess(DocumentReference documentReference) {
+                Toast.makeText(getContext(), "Ваше объявление успешно добавлено!", Toast.LENGTH_LONG).show();
+                getActivity().finish();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(getContext(), "Произошла ошибка, попробуйте позднее!", Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     private void addKindHands() {

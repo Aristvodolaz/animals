@@ -39,7 +39,8 @@ public class PoteryashkiAnimalsAdapter extends RecyclerView.Adapter<PoteryashkiA
         holder.pol.setText(data.get(position).getPol());
         holder.description.setText("Особые приметы: "+data.get(position).getDescription());
         holder.address.setText("Место нахождения: "+ data.get(position).getAdress());
-        Picasso.get().load(data.get(position).getImgURL()).into(holder.img);
+//        if (!data.get(position).getImgURL().equals("") ||data.get(position).getImgURL()!=null ){
+//        Picasso.get().load(data.get(position).getImgURL()).into(holder.img);}
     }
 
     @Override
