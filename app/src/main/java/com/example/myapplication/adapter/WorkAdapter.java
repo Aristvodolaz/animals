@@ -5,6 +5,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -34,6 +35,12 @@ public class WorkAdapter extends RecyclerView.Adapter<WorkAdapter.LabelHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull WorkAdapter.LabelHolder holder, int position) {
+        holder.name.setText(data.get(position).getName() +" " +data.get(position).getSurname().substring(0,1)+". ");
+        holder.phone.setText(data.get(position).getPhone());
+        holder.age.setText("Возраст: "+data.get(position).getAge());
+        holder.work.setText(data.get(position).getWork());
+        holder.city.setText("Город: "+data.get(position).getCity());
+        holder.price.setText("Цена: " + data.get(position).getPrice());
     }
 
     @Override
@@ -42,8 +49,18 @@ public class WorkAdapter extends RecyclerView.Adapter<WorkAdapter.LabelHolder> {
     }
 
     public class LabelHolder extends RecyclerView.ViewHolder{
+
+        TextView work, price, city, age, name, phone;
+
         public LabelHolder(@NonNull View itemView) {
             super(itemView);
+
+            work = itemView.findViewById(R.id.work);
+            price = itemView.findViewById(R.id.price);
+            city = itemView.findViewById(R.id.city);
+            age = itemView.findViewById(R.id.age);
+            name = itemView.findViewById(R.id.name_user);
+            phone = itemView.findViewById(R.id.num_user);
         }
     }
 }

@@ -22,13 +22,13 @@ public class CreateFormAnimalsActivity extends AppCompatActivity {
         container = findViewById(R.id.container);
 
         Bundle b = getIntent().getExtras();
-        if(b.getInt("type_create") == 0){
+        if(b.getInt("type_info") == 0){
             //todo create form for animals
             replaceFragment(CreateAnimalsFragment.newInstance(), false);
-        } else if (b.getInt("type_create") ==1) {
+        } else if (b.getInt("type_info") ==1) {
             //todo create form for worker
             replaceFragment(CreateWorkerFragment.newInstance(), false);
-        } else if (b.getInt("type_create") == 2) {
+        } else if (b.getInt("type_info") == 2) {
             //todo create form for perederzhka
             replaceFragment(CreatePerederzhkaFragment.newInstance(), false);
         }

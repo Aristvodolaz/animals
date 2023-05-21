@@ -39,7 +39,7 @@ public class NeedWorkAdapter extends RecyclerView.Adapter<NeedWorkAdapter.LableH
         holder.animals.setText("Животное: "+data.get(position).getAnimals());
         holder.poroda.setText("Порода: " + data.get(position).getPoroda());
         holder.days.setText("Количество дней: "+ data.get(position).getDays());
-        holder.name.setText(data.get(position).getName() + data.get(position).getSurname().substring(0,1)+". ");
+        holder.name.setText(data.get(position).getName() + " "+data.get(position).getSurname().substring(0,1)+". ");
         holder.phone.setText(data.get(position).getPhone());
     }
 
@@ -56,7 +56,7 @@ public class NeedWorkAdapter extends RecyclerView.Adapter<NeedWorkAdapter.LableH
             address = itemView.findViewById(R.id.address);
             animals = itemView.findViewById(R.id.animals);
             poroda = itemView.findViewById(R.id.poroda);
-            days = itemView.findViewById(R.id.price);
+            days = itemView.findViewById(R.id.days);
             name = itemView.findViewById(R.id.name_user);
             phone = itemView.findViewById(R.id.num_user);
 

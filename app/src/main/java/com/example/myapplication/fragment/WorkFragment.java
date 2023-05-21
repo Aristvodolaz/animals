@@ -48,7 +48,7 @@ public class WorkFragment extends Fragment {
     public static WorkFragment newInstance() {
         return new WorkFragment();
     }
-    String[] lable = {"МЫ ИЩЕМ РАБОТНИКОВ", "МЫ ПРЕДЛАГАЕМ УСЛУГУ"};
+    String[] lable = { "МЫ ПРЕДЛАГАЕМ УСЛУГУ","МЫ ИЩЕМ РАБОТНИКОВ"};
     RecyclerView rv;
     TabLayout tl;
     FirebaseDatabase firebaseDatabase;
