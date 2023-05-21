@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.myapplication.R;
@@ -66,6 +67,10 @@ public class CreateAnimalsFragment extends Fragment {
         // Initialize FirebaseFirestore
         db = FirebaseFirestore.getInstance();
         tl = v.findViewById(R.id.tab_view);
+        tl.setSelectedTabIndicatorColor(ContextCompat.getColor(getContext(), R.color.color_for_reg));
+
+// Делаем подчеркивание выбранного элемента полной ширины
+        tl.setTabIndicatorFullWidth(true);
         poroda = v.findViewById(R.id.poroda);
         klichka = v.findViewById(R.id.klichka_n);
         date = v.findViewById(R.id.date);
@@ -237,7 +242,7 @@ public class CreateAnimalsFragment extends Fragment {
         } else {
             phoneUser.setBackgroundTintList(ColorStateList.valueOf(Color.RED));
         }
-        imgUrl = "";
+        imgUrl = "a";
 
             if(!address.getText().toString().equals("") && !porodaAnim.getText().toString().equals("")&&!datePropazhi.getText().toString().equals("")
                     && !opisanie.getText().toString().equals("") && !pol.getText().toString().equals("") && !nameAnim.getText().toString().equals("")
@@ -296,7 +301,7 @@ public class CreateAnimalsFragment extends Fragment {
         } else {
             phoneUser.setBackgroundTintList(ColorStateList.valueOf(Color.RED));
         }
-        imgUrl = "";
+        imgUrl = "a";
 
         if(!address.getText().toString().equals("") && !porodaAnim.getText().toString().equals("")&&!datePropazhi.getText().toString().equals("")
                 && !opisanie.getText().toString().equals("") && !pol.getText().toString().equals("") && !nameAnim.getText().toString().equals("")
@@ -328,7 +333,7 @@ public class CreateAnimalsFragment extends Fragment {
         } else {
             opisanie.setBackgroundTintList(ColorStateList.valueOf(Color.RED));
         }
-        imgUrl = "";
+        imgUrl = "a";
 
             if (!address.getText().toString().equals("") && !pol.getText().toString().equals("") && !opisanie.getText().toString().equals(""))
                 addToAnimalsDataBase(adress_potery, pol_anim, imgUrl, opisanie_anim);

@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -72,6 +73,10 @@ public class LostAnimalsFragment extends Fragment {
         View v = LayoutInflater.from(getContext()).inflate(R.layout.lost_animals_layout, container, false);
         rv = v.findViewById(R.id.recycler_view);
         tl = v.findViewById(R.id.tab_view);
+        tl.setSelectedTabIndicatorColor(ContextCompat.getColor(getContext(), R.color.color_for_reg));
+
+// Делаем подчеркивание выбранного элемента полной ширины
+        tl.setTabIndicatorFullWidth(true);
         addInfo = v.findViewById(R.id.add_info);
         addInfo.setOnClickListener(view->{
             Intent i = new Intent(getActivity(), CreateFormAnimalsActivity.class);
