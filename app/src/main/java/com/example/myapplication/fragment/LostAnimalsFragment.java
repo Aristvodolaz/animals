@@ -4,6 +4,7 @@ package com.example.myapplication.fragment;
 import static android.content.ContentValues.TAG;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -59,6 +60,7 @@ public class LostAnimalsFragment extends Fragment {
     DatabaseReference databaseReference;
     List<AnimalsLost> data;
     List<Animals> animalsList;
+    ProgressDialog progressDialog;
     ImageView addInfo;
 
     String[] labels = {"ИЩЕМ ДОМ", "ПОТЕРЯШКИ", "ДОБРЫЕ РУКИ"};
@@ -80,8 +82,13 @@ public class LostAnimalsFragment extends Fragment {
         databaseReference = firebaseDatabase.getReference();
 //        databaseReference = firebaseDatabase.getReference("Data");
 
+//        ProgressDialog progressDialog = new ProgressDialog(getContext());
+//        progressDialog.setMessage("Загрузка...");
+//        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+//        progressDialog.setCancelable(false);
+//        progressDialog.show();
         initViews();
-        getInfoLostAnimals();
+//        progressDialog.dismiss();
         return v;
     }
 
@@ -89,16 +96,16 @@ public class LostAnimalsFragment extends Fragment {
         for (int i = 0 ; i < labels.length ; i++){
             tl.addTab(tl.newTab().setText(labels[i]));
         }
+        getPoteryazhki();
         tl.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 switch (tab.getPosition()){
                     case 0:
-                        getInfoLostAnimals();
-
+                        getPoteryazhki();
                         break;
                     case 1:
-                        getPoteryazhki();
+                        getInfoLostAnimals();
                         break;
                     case 2:
                         getKingHands();
@@ -163,6 +170,7 @@ public class LostAnimalsFragment extends Fragment {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
+
                     List<Animals> animalsList = new ArrayList<>();
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         String name = document.getString("adress");
