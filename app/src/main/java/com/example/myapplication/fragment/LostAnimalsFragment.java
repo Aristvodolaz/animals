@@ -49,7 +49,7 @@ public class LostAnimalsFragment extends Fragment {
     DatabaseReference databaseReference;
     List<AnimalsLost> data;
     List<Animals> data_without_home;
-    ImageView addInfo;
+    ImageView addInfo, backArrow;
 
     String[] labels = {"ИЩЕМ ДОМ", "ПОТЕРЯШКИ", "ДОБРЫЕ РУКИ"};
 
@@ -65,6 +65,12 @@ public class LostAnimalsFragment extends Fragment {
             Intent i = new Intent(getActivity(), CreateFormAnimalsActivity.class);
             i.putExtra("type_info", 0);
             startActivity(i);
+        });
+
+        backArrow = v.findViewById(R.id.back_arrow);
+        backArrow.setOnClickListener(view -> {
+            Intent intent = new Intent(getActivity(), StartActivity.class);
+            startActivity(intent);
         });
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference("Data");

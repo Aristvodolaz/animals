@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.app.Notification;
 import android.os.Bundle;
 import android.widget.FrameLayout;
 
@@ -22,6 +23,13 @@ public class MainActivity extends AppCompatActivity {
         replaceFragment(StartFragmentKt.Companion.newInstance(), true);
 
     }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+    }
+
+
     public void replaceFragment(Fragment fragment, boolean addToBackStack) {
         FragmentTransaction fragmentTransaction =
                 getSupportFragmentManager()

@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.myapplication.R;
 import com.example.myapplication.activity.CreateFormAnimalsActivity;
+import com.example.myapplication.activity.StartActivity;
 import com.example.myapplication.db.Animals;
 import com.example.myapplication.db.NeedPerderzhka;
 import com.example.myapplication.db.Perederzhka;
@@ -35,6 +36,7 @@ public class CreatePerederzhkaFragment extends Fragment {
 
     String name,surname, phone, address, animals, poroda, descriprion, imgUrl, price;
     int day;
+    ImageView backArrow;
     String[] labels = {"МЫ ИЩЕМ ПЕРЕДЕРЖКУ","МЫ ПРЕДЛАГАЕМ ПЕРЕДЕРЖКУ"};
     //todo sddelat formu dlya perederzhki
     public static CreatePerederzhkaFragment newInstance() {
@@ -46,6 +48,11 @@ public class CreatePerederzhkaFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = LayoutInflater.from(getContext()).inflate(R.layout.create_perederzhka_layout, container, false);
         tl = v.findViewById(R.id.tab_view);
+        backArrow = v.findViewById(R.id.back_arrow);
+        backArrow.setOnClickListener(view -> {
+            Intent intent = new Intent(getActivity(), StartActivity.class);
+            startActivity(intent);
+        });
         initViewPager();
         addPerederzhka();
         return v;

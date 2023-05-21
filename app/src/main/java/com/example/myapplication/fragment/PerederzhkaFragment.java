@@ -48,7 +48,7 @@ public class PerederzhkaFragment extends Fragment {
     DatabaseReference databaseReference;
     List<Perederzhka> data;
     List<NeedPerderzhka> data_need;
-    ImageView addInfo;
+    ImageView addInfo, backArrow;
 
     @Nullable
     @Override
@@ -66,6 +66,12 @@ public class PerederzhkaFragment extends Fragment {
             startActivity(i);
         });
 
+        backArrow = v.findViewById(R.id.back_arrow);
+
+        backArrow.setOnClickListener(view -> {
+            Intent intent = new Intent(getActivity(), StartActivity.class);
+            startActivity(intent);
+        });
         initViewPager();
         getPerederzhka();
 
