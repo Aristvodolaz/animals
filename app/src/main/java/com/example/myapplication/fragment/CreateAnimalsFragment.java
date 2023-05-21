@@ -43,6 +43,7 @@ public class CreateAnimalsFragment extends Fragment {
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
     EditText address, porodaAnim, datePropazhi, pol, opisanie, nameAnim, nameUser, phoneUser;
+    TextView mesto;
     String adress_potery, poroda_anim, date_prodazhi, pol_anim, imgUrl, opisanie_anim, name_anim, name_user, phone_user;
     private FirebaseFirestore db;
     //todo sddelat formu dlya zhivotnyx
@@ -57,10 +58,13 @@ public class CreateAnimalsFragment extends Fragment {
         View v = LayoutInflater.from(getContext()).inflate(R.layout.create_lost_animals_layout, container, false);
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference("Data");
+
+        tl = v.findViewById(R.id.tab_view);
         poroda = v.findViewById(R.id.poroda);
         klichka = v.findViewById(R.id.klichka_n);
         date = v.findViewById(R.id.date);
         user = v.findViewById(R.id.user);
+        mesto = v.findViewById(R.id.mesto);
 
         address = v.findViewById(R.id.adress_anim);
         porodaAnim = v.findViewById(R.id.poroda_anim);
@@ -74,10 +78,19 @@ public class CreateAnimalsFragment extends Fragment {
         addZapis = v.findViewById(R.id.add_zapis);
         addPhoto = v.findViewById(R.id.add_photo);
 
+        initViewPager();
+        addAnimals();
+        return v;
+    }
+    private void initViewPager() {
+        for (int i = 0; i < label.length; i++) {
+            tl.addTab(tl.newTab().setText(label[i]));
+        }
+
         tl.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                switch (tab.getPosition()){
+                switch (tab.getPosition()) {
                     case 0:
                         addAnimals();
                         break;
@@ -89,15 +102,18 @@ public class CreateAnimalsFragment extends Fragment {
                         break;
                 }
             }
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {}
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {}
-        });
-        addAnimals();
-        return v;
-    }
 
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+    }
     private void addToKindHandsDataBase(String adress_potery, String poroda_anim, String date_prodazhi, String pol_anim, String imgUrl,
                                         String opisanie_anim, String name_anim, String name_user, String phone_user) {
 
@@ -158,14 +174,12 @@ public class CreateAnimalsFragment extends Fragment {
         });
     }
     private void addKindHands() {
-        for (int i = 0; i < label.length; i++) {
-            tl.addTab(tl.newTab().setText(label[i]));
-        }
+
         poroda.setVisibility(View.VISIBLE);
         klichka.setVisibility(View.VISIBLE);
         date.setVisibility(View.VISIBLE);
         user.setVisibility(View.VISIBLE);
-
+        addZapis.setOnClickListener(v->{
         if (!address.getText().toString().equals("") || address.getText() != null) {
             adress_potery = address.getText().toString();
         } else {
@@ -207,7 +221,7 @@ public class CreateAnimalsFragment extends Fragment {
             phoneUser.setBackgroundTintList(ColorStateList.valueOf(Color.RED));
         }
         imgUrl = "";
-        addZapis.setOnClickListener(v->{
+
             if(!address.getText().toString().equals("") && !porodaAnim.getText().toString().equals("")&&!datePropazhi.getText().toString().equals("")
                     && !opisanie.getText().toString().equals("") && !pol.getText().toString().equals("") && !nameAnim.getText().toString().equals("")
                     && !nameUser.getText().toString().equals("") && !phoneUser.getText().toString().equals("") )
@@ -218,15 +232,13 @@ public class CreateAnimalsFragment extends Fragment {
     }
 
     private void addPoteryashki() {
-        for (int i = 0 ; i < label.length ; i++){
-            tl.addTab(tl.newTab().setText(label[i]));
-        }
-        nameAddress.setText("Место пропажи");
+
+        mesto.setText("Место пропажи");
         poroda.setVisibility(View.VISIBLE);
         klichka.setVisibility(View.VISIBLE);
         date.setVisibility(View.VISIBLE);
         user.setVisibility(View.VISIBLE);
-
+        addZapis.setOnClickListener(v -> {
         if (!address.getText().toString().equals("") || address.getText() != null) {
             adress_potery = address.getText().toString();
         } else {
@@ -268,7 +280,7 @@ public class CreateAnimalsFragment extends Fragment {
             phoneUser.setBackgroundTintList(ColorStateList.valueOf(Color.RED));
         }
         imgUrl = "";
-        addZapis.setOnClickListener(v->{
+
         if(!address.getText().toString().equals("") && !porodaAnim.getText().toString().equals("")&&!datePropazhi.getText().toString().equals("")
                 && !opisanie.getText().toString().equals("") && !pol.getText().toString().equals("") && !nameAnim.getText().toString().equals("")
                 && !nameUser.getText().toString().equals("") && !phoneUser.getText().toString().equals("") )
@@ -277,10 +289,13 @@ public class CreateAnimalsFragment extends Fragment {
     }
 
     private void addAnimals() {
-        for (int i = 0; i < label.length; i++) {
-            tl.addTab(tl.newTab().setText(label[i]));
-        }
 
+        mesto.setText("Место нахождения");
+        poroda.setVisibility(View.GONE);
+        klichka.setVisibility(View.GONE);
+        date.setVisibility(View.GONE);
+        user.setVisibility(View.GONE);
+        addZapis.setOnClickListener(v -> {
         if (!address.getText().toString().equals("") || address.getText() != null) {
             adress_potery = address.getText().toString();
         } else {
@@ -297,7 +312,7 @@ public class CreateAnimalsFragment extends Fragment {
             opisanie.setBackgroundTintList(ColorStateList.valueOf(Color.RED));
         }
         imgUrl = "";
-        addZapis.setOnClickListener(v -> {
+
             if (!address.getText().toString().equals("") && !pol.getText().toString().equals("") && !opisanie.getText().toString().equals(""))
                 addToAnimalsDataBase(adress_potery, pol_anim, imgUrl, opisanie_anim);
         });

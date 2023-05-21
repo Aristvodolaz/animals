@@ -26,7 +26,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class StartActivity extends AppCompatActivity {
     String login;
-    ImageView personBtn, workBtn, perederzhkaBtn, animalsbtn;
+    ImageView personBtn, workBtn, perederzhkaBtn, animalsbtn, mapsBtn;
     FirebaseDatabase firebaseDatabase;
     DatabaseReference mDatabase;
 
@@ -41,22 +41,26 @@ public class StartActivity extends AppCompatActivity {
         animalsbtn = findViewById(R.id.animals_btn);
         workBtn = findViewById(R.id.work_btn);
         personBtn = findViewById(R.id.person_btn);
+//        mapsBtn = findViewById(R.id.maps);
         firebaseDatabase = FirebaseDatabase.getInstance();
         initViews();
     }
 
     private void initViews() {
-        personBtn.setOnClickListener(v -> {
+//        mapsBtn.setOnClickListener(v->{
+//            replaceFragment(MapsFragment.newInstance(), false);
+//        });
+        animalsbtn.setOnClickListener(v -> {
             replaceFragment(LostAnimalsFragment.newInstance(), false);
         });
         perederzhkaBtn.setOnClickListener(v -> {
-            replaceFragment(PerederzhkaFragment.newInstance(), true);
+            replaceFragment(PerederzhkaFragment.newInstance(), false);
         });
         workBtn.setOnClickListener(v -> {
-            replaceFragment(WorkFragment.newInstance(), true);
+            replaceFragment(WorkFragment.newInstance(), false);
         });
         personBtn.setOnClickListener(v -> {
-            replaceFragment(PersonalFragment.newInstance(), true);
+            replaceFragment(PersonalFragment.newInstance(), false);
         });
     }
 

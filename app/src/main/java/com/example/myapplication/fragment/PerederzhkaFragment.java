@@ -1,9 +1,12 @@
 package com.example.myapplication.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -14,6 +17,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.myapplication.R;
+import com.example.myapplication.activity.CreateFormAnimalsActivity;
+import com.example.myapplication.activity.StartActivity;
 import com.example.myapplication.adapter.NeedPerederzhkaAdapter;
 import com.example.myapplication.adapter.PerederzhkaAdapter;
 import com.example.myapplication.db.NeedPerderzhka;
@@ -43,6 +48,7 @@ public class PerederzhkaFragment extends Fragment {
     DatabaseReference databaseReference;
     List<Perederzhka> data;
     List<NeedPerderzhka> data_need;
+    ImageView addInfo;
 
     @Nullable
     @Override
@@ -53,6 +59,12 @@ public class PerederzhkaFragment extends Fragment {
 //        viewPager = v.findViewById(R.id.view_pager);
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference("Data");
+        addInfo = v.findViewById(R.id.add_info);
+        addInfo.setOnClickListener(view->{
+            Intent i = new Intent(getActivity(), CreateFormAnimalsActivity.class);
+            i.putExtra("type_info", 3);
+            startActivity(i);
+        });
 
         initViewPager();
         getPerederzhka();

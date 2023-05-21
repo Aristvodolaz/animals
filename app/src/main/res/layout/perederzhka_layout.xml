@@ -24,12 +24,20 @@
                 android:layout_height="24dp"
                 android:src="@drawable/barrow" />
             <TextView
+                android:layout_weight="1"
+                android:layout_width="0dp"
                 android:textSize="18sp"
                 android:textColor="@color/black"
                 android:layout_marginLeft="16dp"
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="ПЕРЕДЕРЖКА" />
+
+            <ImageView
+                android:layout_gravity="end"
+                android:src="@drawable/pluuus"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:id="@+id/add_info"/>
         </LinearLayout>
     </FrameLayout>
     <com.google.android.material.tabs.TabLayout

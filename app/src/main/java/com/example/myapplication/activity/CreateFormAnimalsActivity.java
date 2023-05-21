@@ -8,6 +8,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.myapplication.R;
+import com.example.myapplication.fragment.CreateAnimalsFragment;
+import com.example.myapplication.fragment.CreatePerederzhkaFragment;
+import com.example.myapplication.fragment.CreateWorkerFragment;
 
 public class CreateFormAnimalsActivity extends AppCompatActivity {
 
@@ -21,13 +24,13 @@ public class CreateFormAnimalsActivity extends AppCompatActivity {
         Bundle b = getIntent().getExtras();
         if(b.getInt("type_create") == 0){
             //todo create form for animals
-//            replaceFragment(CreateAnimalsFragment.newInstance);
+            replaceFragment(CreateAnimalsFragment.newInstance(), false);
         } else if (b.getInt("type_create") ==1) {
             //todo create form for worker
-//            replaceFragment(CreateWorkerFragment.);
+            replaceFragment(CreateWorkerFragment.newInstance(), false);
         } else if (b.getInt("type_create") == 2) {
             //todo create form for perederzhka
-//            replaceFragment(Perederzhka.);
+            replaceFragment(CreatePerederzhkaFragment.newInstance(), false);
         }
 //        replaceFragment(StartFragment.newInstance(), true);
     }

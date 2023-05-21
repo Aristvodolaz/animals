@@ -36,6 +36,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/tab_view"/>
         <LinearLayout
+            android:layout_marginTop="8dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -134,11 +135,20 @@
                 android:orientation="vertical"
                 android:id="@+id/user">
                 <TextView
-                    android:id="@+id/user_name"
                     android:layout_marginTop="4dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Место нахождения"/>
+                    android:text="Имя пользователя"/>
+                <EditText
+                    android:maxLength="255"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/user_name"/>
+                <TextView
+                    android:layout_marginTop="4dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Номер телефона"/>
                 <EditText
                     android:maxLength="255"
                     android:layout_width="match_parent"

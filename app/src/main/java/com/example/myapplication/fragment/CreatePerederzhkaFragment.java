@@ -1,9 +1,11 @@
 package com.example.myapplication.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -11,6 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.myapplication.R;
+import com.example.myapplication.activity.CreateFormAnimalsActivity;
 import com.example.myapplication.db.Animals;
 import com.example.myapplication.db.NeedPerderzhka;
 import com.example.myapplication.db.Perederzhka;
@@ -28,6 +31,7 @@ public class CreatePerederzhkaFragment extends Fragment {
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
     private FirebaseFirestore db;
+    ImageView addInfo;
 
     String name,surname, phone, address, animals, poroda, descriprion, imgUrl, price;
     int day;
@@ -41,10 +45,20 @@ public class CreatePerederzhkaFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = LayoutInflater.from(getContext()).inflate(R.layout.create_perederzhka_layout, container, false);
+        tl = v.findViewById(R.id.tab_view);
+        initViewPager();
+        addPerederzhka();
+        return v;
+    }
+    private void initViewPager() {
+        for (int i = 0; i < labels.length; i++) {
+            tl.addTab(tl.newTab().setText(labels[i]));
+        }
+
         tl.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                switch (tab.getPosition()){
+                switch (tab.getPosition()) {
                     case 0:
                         addPerederzhka();
                         break;
@@ -53,13 +67,17 @@ public class CreatePerederzhkaFragment extends Fragment {
                         break;
                 }
             }
+
             @Override
-            public void onTabUnselected(TabLayout.Tab tab) {}
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
             @Override
-            public void onTabReselected(TabLayout.Tab tab) {}
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
         });
-        addPerederzhka();
-        return v;
     }
 
     private void addToNeedDataBase(String name, String surname, String phone,

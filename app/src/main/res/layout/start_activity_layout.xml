@@ -42,6 +42,14 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:src="@drawable/baseline_personal_injury_24"/>
+<!--        <ImageView-->
+<!--            android:id="@+id/maps"-->
+<!--        android:layout_gravity="center_vertical"-->
+<!--        android:layout_weight="1"-->
+<!--        android:layout_width="40dp"-->
+<!--        android:layout_height="40dp"-->
+<!--        android:src="@drawable/baseline_map_24"/>-->
+
         <ImageView
             android:id="@+id/person_btn"
         android:layout_gravity="center_vertical"

@@ -2,10 +2,12 @@ package com.example.myapplication.fragment;
 
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.Toast;
 
@@ -16,6 +18,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.R;
+import com.example.myapplication.activity.CreateFormAnimalsActivity;
+import com.example.myapplication.activity.StartActivity;
 import com.example.myapplication.adapter.KindHandsAdapter;
 import com.example.myapplication.adapter.LostAnimals;
 import com.example.myapplication.adapter.PoteryashkiAnimalsAdapter;
@@ -45,6 +49,7 @@ public class LostAnimalsFragment extends Fragment {
     DatabaseReference databaseReference;
     List<AnimalsLost> data;
     List<Animals> data_without_home;
+    ImageView addInfo;
 
     String[] labels = {"ИЩЕМ ДОМ", "ПОТЕРЯШКИ", "ДОБРЫЕ РУКИ"};
 
@@ -54,8 +59,25 @@ public class LostAnimalsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = LayoutInflater.from(getContext()).inflate(R.layout.lost_animals_layout, container, false);
         rv = v.findViewById(R.id.recycler_view);
+        tl = v.findViewById(R.id.tab_view);
+        addInfo = v.findViewById(R.id.add_info);
+        addInfo.setOnClickListener(view->{
+            Intent i = new Intent(getActivity(), CreateFormAnimalsActivity.class);
+            i.putExtra("type_info", 0);
+            startActivity(i);
+        });
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference("Data");
+
+        initViews();
+        getInfoLostAnimals();
+        return v;
+    }
+
+    public void initViews(){
+        for (int i = 0 ; i < labels.length ; i++){
+            tl.addTab(tl.newTab().setText(labels[i]));
+        }
         tl.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -82,14 +104,10 @@ public class LostAnimalsFragment extends Fragment {
 
             }
         });
-        getInfoLostAnimals();
-        return v;
     }
     //todo dobtye ruki
     public void getKingHands(){
-        for (int i = 0 ; i < labels.length ; i++){
-            tl.addTab(tl.newTab().setText(labels[i]));
-        }
+
         databaseReference = firebaseDatabase.getReference("KindAnimalsData");
         databaseReference.addChildEventListener(new ChildEventListener() {
             @Override
@@ -125,9 +143,7 @@ public class LostAnimalsFragment extends Fragment {
 
     //todo bezdomnye animals
     private void getPoteryazhki(){
-        for (int i = 0 ; i < labels.length ; i++){
-            tl.addTab(tl.newTab().setText(labels[i]));
-        }
+
         databaseReference = firebaseDatabase.getReference("PoteryashkiAnimalsData");
         databaseReference.addChildEventListener(new ChildEventListener() {
             @Override

@@ -1,9 +1,12 @@
 package com.example.myapplication.fragment;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -11,6 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.myapplication.R;
+import com.example.myapplication.activity.CreateFormAnimalsActivity;
 import com.example.myapplication.db.AnimalsLost;
 import com.example.myapplication.db.NeedWorking;
 import com.example.myapplication.db.Working;
@@ -30,6 +34,7 @@ public class CreateWorkerFragment extends Fragment {
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
     private FirebaseFirestore db;
+    ImageView addInfo;
 
     String name,surname, phone, address, zadacha,description, min_price, max_price, age, city, price, imgUrl;
     String[] labels = {"МЫ ИЩЕМ РАБОТУ","МЫ НУЖДАЕМСЯ В УСЛУГЕ"};
@@ -37,10 +42,22 @@ public class CreateWorkerFragment extends Fragment {
         return new CreateWorkerFragment();
     }
 
+    @SuppressLint("MissingInflatedId")
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = LayoutInflater.from(getContext()).inflate(R.layout.create_work_layout, container, false);
+        tl = v.findViewById(R.id.tab_view);
+
+        initViews();
+        addWork();
+        return v;
+    }
+
+    private void initViews() {
+        for (int i = 0; i < labels.length; i++) {
+            tl.addTab(tl.newTab().setText(labels[i]));
+        }
         tl.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -58,9 +75,8 @@ public class CreateWorkerFragment extends Fragment {
             @Override
             public void onTabReselected(TabLayout.Tab tab) {}
         });
-        addWork();
-        return v;
     }
+
     private void addToNeedDataBase(String name, String surname, String phone, String adress, String zadacha,
                                         String description, String min_price, String max_price) {
 
@@ -101,17 +117,13 @@ public class CreateWorkerFragment extends Fragment {
         });
     }
     private void addNeedWorker() {
-        for (int i = 0; i < labels.length; i++) {
-            tl.addTab(tl.newTab().setText(labels[i]));
-        }
+
         addToNeedDataBase(name, surname,phone,address,zadacha,description,min_price, max_price);
 
     }
 
     private void addWork() {
-        for (int i = 0; i < labels.length; i++) {
-            tl.addTab(tl.newTab().setText(labels[i]));
-        }
+
 
         addToWorkDataBase(name,surname,phone,age,city,zadacha,imgUrl,price);
     }

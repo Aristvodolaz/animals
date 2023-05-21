@@ -1,10 +1,12 @@
 package com.example.myapplication.fragment;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -14,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.R;
+import com.example.myapplication.activity.CreateFormAnimalsActivity;
 import com.example.myapplication.adapter.NeedWorkAdapter;
 import com.example.myapplication.adapter.WorkAdapter;
 import com.example.myapplication.db.NeedWorking;
@@ -39,6 +42,7 @@ public class WorkFragment extends Fragment {
     DatabaseReference databaseReference;
     List<Working> data;
     List<NeedWorking> data_need;
+    ImageView addInfo;
 
     @SuppressLint("MissingInflatedId")
     @Nullable
@@ -46,8 +50,25 @@ public class WorkFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = LayoutInflater.from(getContext()).inflate(R.layout.work_layout, container, false);
         rv = v.findViewById(R.id.recycler_view);
+        tl = v.findViewById(R.id.tab_view);
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference("Data");
+        addInfo = v.findViewById(R.id.add_info);
+        addInfo.setOnClickListener(view->{
+            Intent i = new Intent(getActivity(), CreateFormAnimalsActivity.class);
+            i.putExtra("type_info", 1);
+            startActivity(i);
+        });
+        initViews();
+        getWorking();
+        return v;
+
+    }
+
+    private void initViews() {
+        for (int i = 0; i < lable.length; i++) {
+            tl.addTab(tl.newTab().setText(lable[i]));
+        }
         tl.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -71,15 +92,10 @@ public class WorkFragment extends Fragment {
 
             }
         });
-        getWorking();
-        return v;
-
     }
 
     private void getNeedWorking() {
-        for (int i = 0; i < lable.length; i++) {
-            tl.addTab(tl.newTab().setText(lable[i]));
-        }
+
         databaseReference = firebaseDatabase.getReference("WorkingNeedData");
         databaseReference.addChildEventListener(new ChildEventListener() {
             @Override
@@ -118,9 +134,6 @@ public class WorkFragment extends Fragment {
     }
 
     private void getWorking() {
-        for (int i = 0; i < lable.length; i++) {
-            tl.addTab(tl.newTab().setText(lable[i]));
-        }
         databaseReference = firebaseDatabase.getReference("WorkingPersonData");
         databaseReference.addChildEventListener(new ChildEventListener() {
             @Override
