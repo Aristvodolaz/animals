@@ -59,7 +59,7 @@ public class LostAnimalsFragment extends Fragment {
     DatabaseReference databaseReference;
     List<AnimalsLost> data;
     List<Animals> animalsList;
-    ImageView addInfo;
+    ImageView addInfo, backArrow;
 
     String[] labels = {"ИЩЕМ ДОМ", "ПОТЕРЯШКИ", "ДОБРЫЕ РУКИ"};
 
@@ -75,6 +75,12 @@ public class LostAnimalsFragment extends Fragment {
             Intent i = new Intent(getActivity(), CreateFormAnimalsActivity.class);
             i.putExtra("type_info", 0);
             startActivity(i);
+        });
+
+        backArrow = v.findViewById(R.id.back_arrow);
+        backArrow.setOnClickListener(view -> {
+            Intent intent = new Intent(getActivity(), StartActivity.class);
+            startActivity(intent);
         });
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference();
@@ -120,7 +126,36 @@ public class LostAnimalsFragment extends Fragment {
     //todo dobtye ruki
     public void getKingHands(){
 
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        CollectionReference collectionRef = db.collection("KindAnimalsData");
+
+        collectionRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    List<Animals> animalsList = new ArrayList<>();
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        String name = document.getString("adress");
+                        String desc = document.getString("description");
+                        String pol = document.getString("pol");
+                        String img = document.getString("imgURL");
+                        Animals animal = new Animals(name, img, pol, desc);
+                        animalsList.add(animal);
+                    }
+
+//                    PoteryashkiAnimalsAdapter adapter = new PoteryashkiAnimalsAdapter(getContext(), animalsList);
+                    PoteryashkiAnimalsAdapter adapter = new PoteryashkiAnimalsAdapter(getContext(), animalsList);
+                    rv.setLayoutManager(new LinearLayoutManager(getActivity()));
+                    rv.setAdapter(adapter);
+
+                } else {
+                    Log.d(TAG, "Ошибка при получении данных из Firestore: " + task.getException());
+                }
+            }
+        });
+
         databaseReference = firebaseDatabase.getReference("KindAnimalsData");
+
         databaseReference.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
@@ -204,9 +239,9 @@ public class LostAnimalsFragment extends Fragment {
                         animalsList.add(animal);
                     }
 
-//                    PoteryashkiAnimalsAdapter adapter = new PoteryashkiAnimalsAdapter(getContext(), animalsList);
-//                    rv.setLayoutManager(new LinearLayoutManager(getActivity()));
-//                    rv.setAdapter(adapter);
+                    PoteryashkiAnimalsAdapter adapter = new PoteryashkiAnimalsAdapter(getContext(), animalsList);
+                    rv.setLayoutManager(new LinearLayoutManager(getActivity()));
+                    rv.setAdapter(adapter);
 
                 } else {
                     Log.d(TAG, "Ошибка при получении данных из Firestore: " + task.getException());

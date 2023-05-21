@@ -32,7 +32,7 @@ public class PersonalFragment extends Fragment {
         return new PersonalFragment();
     }
     String name, surname, age, city, pol, phone, img;
-    ImageView backArrow;
+    ImageView backArrow, exit;
     private DatabaseReference mDatabaseReference;
     private FirebaseDatabase mDatabase;
     private FirebaseAuth mAuth;
@@ -49,6 +49,11 @@ public class PersonalFragment extends Fragment {
         backArrow.setOnClickListener(view -> {
             Intent intent = new Intent(getActivity(), StartActivity.class);
             startActivity(intent);
+        });
+
+        exit = v.findViewById(R.id.exit);
+        exit.setOnClickListener(view -> {
+            mAuth.signOut();
         });
 
         nameFr = v.findViewById(R.id.name);
